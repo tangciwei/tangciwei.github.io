@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="">
+  <head><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="webpack教程之survivejs笔记"/><meta name="keywords" content="前端,nodejs,js,javascript,vue,vue源码,html5,开发者,程序猿,编程,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验" /><link rel="alternate" href="/atom.xml" title="tangciwei's Blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0" />
+<link rel="canonical" href="http://tangciwei.github.io/2018/09/18/webpack教程之survivejs笔记/"/>
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0" />
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":"","latex":false};
+</script>
+
+    <title>webpack教程之survivejs笔记 - tangciwei's Blog</title>
+  <meta name="generator" content="Hexo 4.2.0"></head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">tangciwei's Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><a href="/">
+        <li class="mobile-menu-item">首页
+          </li>
+      </a><a href="/archives/">
+        <li class="mobile-menu-item">归档
+          </li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于
+          </li>
+      </a></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">tangciwei's Blog</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+          <a class="menu-item-link" href="/">
+            首页
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            归档
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/about/">
+            关于
+            </a>
+        </li>
+      </ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">webpack教程之survivejs笔记
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-09-18
+        </span></div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、功能性"><span class="toc-text">一、功能性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-css处理"><span class="toc-text">1. css处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-图片处理"><span class="toc-text">2. 图片处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-js处理"><span class="toc-text">3. js处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-单个html"><span class="toc-text">4. 单个html</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-多页处理"><span class="toc-text">5. 多页处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-清理功能"><span class="toc-text">6. 清理功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-添加版本信息"><span class="toc-text">7. 添加版本信息</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、代码分割-懒加载-tree-shaking"><span class="toc-text">二、代码分割+懒加载+tree-shaking</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、其他优秀"><span class="toc-text">三、其他优秀</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#compose的模式"><span class="toc-text">compose的模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#构建分析"><span class="toc-text">构建分析</span></a></li></ol></li></ol>
+    </div>
+  </div><div class="post-content"><blockquote>
+<p><a href="https://survivejs.com/webpack/foreword" target="_blank" rel="noopener">survivejs教程链接</a><br>代码：<a href="https://github.com/tangciwei/survivejs-webpack" target="_blank" rel="noopener">survivejs-webpack</a></p>
+</blockquote>
+<h2 id="一、功能性"><a href="#一、功能性" class="headerlink" title="一、功能性"></a>一、功能性</h2><h3 id="1-css处理"><a href="#1-css处理" class="headerlink" title="1. css处理"></a>1. css处理</h3><ul>
+<li>处理样式中的import</li>
+</ul>
+<a id="more"></a>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">options: &#123;</span><br><span class="line">	<span class="comment">// 处理@import "./variables.sass";</span></span><br><span class="line">	importLoaders: <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>提取css</strong></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">exports.extractCSS = (&#123;</span><br><span class="line">        include,</span><br><span class="line">        exclude,</span><br><span class="line">        use = []</span><br><span class="line">    &#125;) =&gt; &#123;</span><br><span class="line">    <span class="comment">// Output extracted CSS to a file</span></span><br><span class="line">    <span class="keyword">const</span> plugin = <span class="keyword">new</span> MiniCssExtractPlugin(&#123;</span><br><span class="line">        <span class="comment">// filename: '[name].css'</span></span><br><span class="line">        filename: <span class="string">'[name].[contenthash:4].css'</span></span><br><span class="line"></span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="built_in">module</span>: &#123;</span><br><span class="line">            rules: [</span><br><span class="line">                &#123;</span><br><span class="line">                    test: <span class="regexp">/\.css$/</span>,</span><br><span class="line">                    include,</span><br><span class="line">                    exclude,</span><br><span class="line"></span><br><span class="line">                    use: [</span><br><span class="line">                        MiniCssExtractPlugin.loader</span><br><span class="line">                    ].concat(use)</span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line">        &#125;,</span><br><span class="line">        plugins: [plugin]</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>purifyCSS精简</strong><br>将不需要的css剔除；</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 精简css</span></span><br><span class="line">exports.purifyCSS = <span class="function">(<span class="params">&#123;paths&#125;</span>) =&gt;</span> (&#123;</span><br><span class="line">    plugins: [<span class="keyword">new</span> PurifyCSSPlugin(&#123;</span><br><span class="line">        paths</span><br><span class="line">    &#125;)]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>自动补齐</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">exports.autoprefix = <span class="function"><span class="params">()</span> =&gt;</span> (&#123;</span><br><span class="line">    loader: <span class="string">'postcss-loader'</span>,</span><br><span class="line">    options: &#123;</span><br><span class="line">        plugins: <span class="function"><span class="params">()</span> =&gt;</span> [<span class="built_in">require</span>(<span class="string">'autoprefixer'</span>)()]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>使用</strong></li>
+</ul>
+<p>自动补齐添加<code>.browserslistrc</code>文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">parts.extractCSS(&#123;</span><br><span class="line">    <span class="comment">// use: 'css-loader'</span></span><br><span class="line">    use: [<span class="string">'css-loader'</span>, parts.autoprefix()]</span><br><span class="line"></span><br><span class="line">&#125;),</span><br><span class="line">parts.purifyCSS(&#123;</span><br><span class="line">    paths: glob.sync(<span class="string">`<span class="subst">$&#123;PATHS.app&#125;</span>/**/*.js`</span>, &#123;</span><br><span class="line">        nodir: <span class="literal">true</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;),</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-图片处理"><a href="#2-图片处理" class="headerlink" title="2. 图片处理"></a>2. 图片处理</h3><ul>
+<li>url-loader:可以设置limit，和name;</li>
+</ul>
+<h3 id="3-js处理"><a href="#3-js处理" class="headerlink" title="3. js处理"></a>3. js处理</h3><p>加.env文件；<br>如果有按需加载的import语法，需要<br><code>&quot;plugins&quot;: [&quot;syntax-dynamic-import&quot;]</code></p>
+<h3 id="4-单个html"><a href="#4-单个html" class="headerlink" title="4. 单个html"></a>4. 单个html</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    plugins:[</span><br><span class="line">        <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">            title: <span class="string">'Webpack demo'</span></span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="5-多页处理"><a href="#5-多页处理" class="headerlink" title="5. 多页处理"></a>5. 多页处理</h3><blockquote>
+<p>需要多个entry；需要output.publicPath;页面可通过chunks复用公共资源</p>
+</blockquote>
+<p>定义：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">exports.page = (&#123;</span><br><span class="line">        path = <span class="string">''</span>,</span><br><span class="line">        template = <span class="built_in">require</span>.resolve(</span><br><span class="line">            <span class="string">'html-webpack-plugin/default_index.ejs'</span></span><br><span class="line">        ),</span><br><span class="line">        title,</span><br><span class="line">        entry,</span><br><span class="line">        chunks = []</span><br><span class="line">    &#125; = &#123;&#125;) =&gt; (&#123;</span><br><span class="line">    <span class="comment">// 入口</span></span><br><span class="line">    entry,</span><br><span class="line"></span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">            chunks,</span><br><span class="line">            filename: <span class="string">`<span class="subst">$&#123;path &amp;&amp; path + <span class="string">'/'</span>&#125;</span>index.html`</span>,</span><br><span class="line">            template,</span><br><span class="line">            title</span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    output: &#123;</span><br><span class="line">        <span class="comment">// Needed for code splitting to work in nested paths</span></span><br><span class="line">        publicPath: <span class="string">'/'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br><span class="line">    </span><br><span class="line"><span class="keyword">const</span> pages = [</span><br><span class="line">    parts.page(&#123;</span><br><span class="line">        title: <span class="string">'Webpack demo'</span>,</span><br><span class="line">        entry: &#123;</span><br><span class="line">            app: PATHS.app</span><br><span class="line">        &#125;,</span><br><span class="line">        chunks: [<span class="string">'app'</span>, <span class="string">'manifest'</span>, <span class="string">'vendor'</span>]</span><br><span class="line"></span><br><span class="line">    &#125;),</span><br><span class="line">    parts.page(&#123;</span><br><span class="line">        title: <span class="string">'Another demo'</span>,</span><br><span class="line">        path: <span class="string">'another'</span>,</span><br><span class="line">        entry: &#123;</span><br><span class="line">            another: path.join(PATHS.app, <span class="string">'another.js'</span>)</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="comment">// 没用到，页面也引用了</span></span><br><span class="line">        chunks: [<span class="string">'another'</span>,<span class="string">'vendor'</span>,<span class="string">'manifest'</span>]</span><br><span class="line">        <span class="comment">// chunks: ['another', 'manifest', 'vendor']</span></span><br><span class="line"></span><br><span class="line">    &#125;)</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> merge([commonConfig, config, &#123;</span><br><span class="line">    mode</span><br><span class="line">&#125;].concat(pages));</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="6-清理功能"><a href="#6-清理功能" class="headerlink" title="6. 清理功能"></a>6. 清理功能</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">exports.clean = <span class="function"><span class="params">path</span> =&gt;</span> (&#123;</span><br><span class="line">    plugins: [<span class="keyword">new</span> CleanWebpackPlugin([path])]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-添加版本信息"><a href="#7-添加版本信息" class="headerlink" title="7. 添加版本信息"></a>7. 添加版本信息</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">exports.attachRevision = <span class="function"><span class="params">()</span> =&gt;</span> (&#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> webpack.BannerPlugin(&#123;</span><br><span class="line">            banner: <span class="keyword">new</span> GitRevisionPlugin().version()</span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="二、代码分割-懒加载-tree-shaking"><a href="#二、代码分割-懒加载-tree-shaking" class="headerlink" title="二、代码分割+懒加载+tree-shaking"></a>二、代码分割+懒加载+tree-shaking</h2><ul>
+<li><p>默认自带tree-shaking功能，可以去掉不需要的代码</p>
+</li>
+<li><p><strong>vendor打包</strong></p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    optimization: &#123;</span><br><span class="line">        splitChunks: &#123;</span><br><span class="line">            <span class="comment">// 分组打包ok</span></span><br><span class="line">            cacheGroups: &#123;</span><br><span class="line">                commons: &#123;</span><br><span class="line">                    test: <span class="regexp">/[\\/]node_modules[\\/]/</span>,</span><br><span class="line">                    name: <span class="string">'vendor'</span>,</span><br><span class="line">                    chunks: <span class="string">'initial'</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>按需加载,常用在路由当中</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (<span class="string">"./lazy"</span>).then</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、其他优秀"><a href="#三、其他优秀" class="headerlink" title="三、其他优秀"></a>三、其他优秀</h2><h3 id="compose的模式"><a href="#compose的模式" class="headerlink" title="compose的模式"></a>compose的模式</h3><blockquote>
+<p>将定义与配置分离；</p>
+</blockquote>
+<p>webpack.config.js<br>webpack.parts.js</p>
+<h3 id="构建分析"><a href="#构建分析" class="headerlink" title="构建分析"></a>构建分析</h3><p>产出，然后有许多可视化工具分析</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"build:stats": "webpack --env production --profile --json &gt; stats.json"</span><br></pre></td></tr></table></figure>
+
+
+
+      </div>
+      <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="http://tangciwei.github.io">tangciwei</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="http://tangciwei.github.io/2018/09/18/webpack%E6%95%99%E7%A8%8B%E4%B9%8Bsurvivejs%E7%AC%94%E8%AE%B0/">http://tangciwei.github.io/2018/09/18/webpack%E6%95%99%E7%A8%8B%E4%B9%8Bsurvivejs%E7%AC%94%E8%AE%B0/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+      <footer class="post-footer">
+        
+        <nav class="post-nav"><a class="prev" href="/2018/09/19/fis3%E6%80%BB%E7%BB%93/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">fis3总结</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    <a class="next" href="/2018/09/17/webpack4%E5%AD%A6%E4%B9%A0/">
+        <span class="next-text nav-default">webpack4学习</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"><a href="mailto:326026238@qq.com" class="iconfont icon-email" title="email"></a>
+        <a href="https://github.com/tangciwei" target="_blank" rel="noopener" class="iconfont icon-github" title="github"></a>
+        <a href="http://weibo.com/p/1005052338797901" target="_blank" rel="noopener" class="iconfont icon-weibo" title="weibo"></a>
+        <a href="https://www.zhihu.com/people/tangciwei/activities" target="_blank" rel="noopener" class="iconfont icon-zhihu" title="zhihu"></a>
+        </div><div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even" target="_blank" rel="noopener">Even</a>
+  </span>
+
+  <span class="copyright-year">&copy;2015 - 2020<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">tangciwei</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+</body>
+</html>

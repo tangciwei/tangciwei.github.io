@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="">
+  <head><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="git"/><meta name="keywords" content="前端,nodejs,js,javascript,vue,vue源码,html5,开发者,程序猿,编程,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验" /><link rel="alternate" href="/atom.xml" title="tangciwei's Blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0" />
+<link rel="canonical" href="http://tangciwei.github.io/2018/08/17/git/"/>
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0" />
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":"","latex":false};
+</script>
+
+    <title>git - tangciwei's Blog</title>
+  <meta name="generator" content="Hexo 4.2.0"></head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">tangciwei's Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><a href="/">
+        <li class="mobile-menu-item">首页
+          </li>
+      </a><a href="/archives/">
+        <li class="mobile-menu-item">归档
+          </li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于
+          </li>
+      </a></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">tangciwei's Blog</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+          <a class="menu-item-link" href="/">
+            首页
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            归档
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/about/">
+            关于
+            </a>
+        </li>
+      </ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">git
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-08-17
+        </span></div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置命令"><span class="toc-text">配置命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git-三个区"><span class="toc-text">git 三个区</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#git-命令"><span class="toc-text">git 命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对比"><span class="toc-text">对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#撤销"><span class="toc-text">撤销</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除"><span class="toc-text">删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#恢复"><span class="toc-text">恢复</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#同步到远程仓库"><span class="toc-text">同步到远程仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多人协作"><span class="toc-text">多人协作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#工具"><span class="toc-text">工具</span></a></li></ol>
+    </div>
+  </div><div class="post-content"><h2 id="配置命令"><a href="#配置命令" class="headerlink" title="配置命令"></a>配置命令</h2><ul>
+<li>配置全局用户名邮箱<ol>
+<li>git config –global user.name “a1846”</li>
+<li>git config –golbal user.email  “xxx”</li>
+</ol>
+</li>
+<li>查看配置信息：git config –list</li>
+</ul>
+<a id="more"></a>
+
+
+<h2 id="git-三个区"><a href="#git-三个区" class="headerlink" title="git 三个区"></a>git 三个区</h2><ol>
+<li>工作区</li>
+<li>暂存区:<ol>
+<li>过度层</li>
+<li>避免误操作</li>
+<li>工作的时候可以经常保存到暂存区，不会有提交历史，所有：保护工作区和版本库</li>
+<li>分支管理，可以<strong>切换其他分支</strong></li>
+</ol>
+</li>
+<li>版本库<h3 id="git-命令"><a href="#git-命令" class="headerlink" title="git 命令"></a>git 命令</h3></li>
+</ol>
+<ul>
+<li><p>git log :查看提交历史</p>
+<h3 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h3></li>
+<li><p>git diff:工作区和暂存区</p>
+</li>
+<li><p>git diff –cached:暂存区和版本库</p>
+</li>
+<li><p>git diff –staged:同上</p>
+</li>
+<li><p>git diff master:工作区和版本库</p>
+<h3 id="撤销"><a href="#撤销" class="headerlink" title="撤销"></a>撤销</h3></li>
+<li><p>git  reset HEAD filename:暂存区撤回工作区</p>
+</li>
+<li><p>git checkout – filename:版本库撤回工作区（注意–后有空格）</p>
+<blockquote>
+<p>亲测，从版本库撤回工作区，须得暂存区撤回工作区</p>
+</blockquote>
+</li>
+<li><p>git commit -m “” –amend:修复提交</p>
+<ol>
+<li>注意，先要add 没有提交的文件<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3></li>
+</ol>
+</li>
+<li><p>git rm filename :暂存区删除<br>如果工作区和暂存区都有：默认删除不成功    </p>
+</li>
+<li><p>强制删除工作区和暂存区：git rm -f filename</p>
+</li>
+<li><p>删除暂存区，工作区不删除：git rm –cached filename</p>
+<h3 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h3></li>
+<li><p>git checkout  idhao filename:从版本库恢复至工作区,指定文件</p>
+<blockquote>
+<p> idhao可以通过git log获得</p>
+</blockquote>
+</li>
+<li><p><strong>git reset –hard idhao</strong>:针对整个版本恢复</p>
+</li>
+<li><p>git rest –hard HEAD 通过HEAD 方式</p>
+<ul>
+<li>向上回到未来版本:git reflog:查看历史纪录</li>
+<li>向下回到过去版本:HEAD^</li>
+<li>回到多个版本：HEAD~2<h3 id="同步到远程仓库"><a href="#同步到远程仓库" class="headerlink" title="同步到远程仓库"></a>同步到远程仓库</h3></li>
+</ul>
+</li>
+<li><p>git remote:远程仓库名字</p>
+</li>
+<li><p>改远程仓库名字：<strong>git remote add jkxy</strong><a href="mailto:git@bitbucket.org">git@bitbucket.org</a>:river_cao/static.git</p>
+</li>
+<li><p>查看远程地址：git remote -v</p>
+<h3 id="多人协作"><a href="#多人协作" class="headerlink" title="多人协作"></a>多人协作</h3></li>
+<li><p>和远端仓库有冲突，是提交不上去的</p>
+</li>
+<li><p>git fetch：拉取不合并 </p>
+</li>
+<li><p>git diff master origin/master</p>
+</li>
+<li><p>git merge origin/master</p>
+</li>
+</ul>
+<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p>一条神奇的语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global alias.lg &quot;log --color --graph --pretty&#x3D;format:&#39;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset&#39; --abbrev-commit&quot;</span><br></pre></td></tr></table></figure>
+      </div>
+      <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="http://tangciwei.github.io">tangciwei</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="http://tangciwei.github.io/2018/08/17/git/">http://tangciwei.github.io/2018/08/17/git/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+      <footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/git/">git</a>
+            </div>
+        
+        <nav class="post-nav"><a class="prev" href="/2018/08/17/%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E5%BB%BA%E8%AE%BE/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">技术团队建设</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    <a class="next" href="/2018/08/17/linux-%E5%85%A5%E9%97%A8/">
+        <span class="next-text nav-default">linux-入门</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"><a href="mailto:326026238@qq.com" class="iconfont icon-email" title="email"></a>
+        <a href="https://github.com/tangciwei" target="_blank" rel="noopener" class="iconfont icon-github" title="github"></a>
+        <a href="http://weibo.com/p/1005052338797901" target="_blank" rel="noopener" class="iconfont icon-weibo" title="weibo"></a>
+        <a href="https://www.zhihu.com/people/tangciwei/activities" target="_blank" rel="noopener" class="iconfont icon-zhihu" title="zhihu"></a>
+        </div><div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even" target="_blank" rel="noopener">Even</a>
+  </span>
+
+  <span class="copyright-year">&copy;2015 - 2020<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">tangciwei</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="">
+  <head><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="es6-基础-let+解构+字符串"/><meta name="keywords" content="前端,nodejs,js,javascript,vue,vue源码,html5,开发者,程序猿,编程,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验" /><link rel="alternate" href="/atom.xml" title="tangciwei's Blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0" />
+<link rel="canonical" href="http://tangciwei.github.io/2018/08/17/es6-基础-let-解构-字符串/"/>
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0" />
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":"","latex":false};
+</script>
+
+    <title>es6-基础-let+解构+字符串 - tangciwei's Blog</title>
+  <meta name="generator" content="Hexo 4.2.0"></head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">tangciwei's Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><a href="/">
+        <li class="mobile-menu-item">首页
+          </li>
+      </a><a href="/archives/">
+        <li class="mobile-menu-item">归档
+          </li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于
+          </li>
+      </a></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">tangciwei's Blog</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+          <a class="menu-item-link" href="/">
+            首页
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            归档
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/about/">
+            关于
+            </a>
+        </li>
+      </ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">es6-基础-let+解构+字符串
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-08-17
+        </span></div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、let-const"><span class="toc-text">一、let+const</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、解构"><span class="toc-text">二、解构</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-数组的解构赋值"><span class="toc-text">1. 数组的解构赋值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-对象的解构赋值"><span class="toc-text">2. 对象的解构赋值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-数值和布尔值的解构赋值"><span class="toc-text">3. 数值和布尔值的解构赋值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-圆括号问题"><span class="toc-text">4. 圆括号问题</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-用途"><span class="toc-text">5. 用途</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、字符串的扩展"><span class="toc-text">三、字符串的扩展</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-字符的-Unicode-表示法"><span class="toc-text">1. 字符的 Unicode 表示法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-codePointAt-String-fromCodePoint"><span class="toc-text">2. codePointAt()+String.fromCodePoint()</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-includes-startsWith-endsWith"><span class="toc-text">3. includes(), startsWith(), endsWith()</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-模板字符串"><span class="toc-text">4. 模板字符串</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-标签模板"><span class="toc-text">5. 标签模板</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </div><div class="post-content"><h3 id="一、let-const"><a href="#一、let-const" class="headerlink" title="一、let+const"></a>一、let+const</h3><p>暂时性死区</p>
+<p><strong>块级作用域优点</strong></p>
+<ul>
+<li>避免内层变量覆盖外层；</li>
+<li>用来计数的循环变量泄露为全局变量。</li>
+<li>立即执行函数表达式（IIFE）不再必要了</li>
+</ul>
+<a id="more"></a>
+
+
+<p><strong>块级作用域与函数声明</strong></p>
+<ul>
+<li><p>ES5 规定，函数只能在顶层作用域和函数作用域之中声明，不能在块级作用域声明。</p>
+</li>
+<li><p>ES6 引入了块级作用域，明确允许在块级作用域之中声明函数</p>
+</li>
+<li><p>考虑到环境导致的行为差异太大，应该避免在块级作用域内声明函数。如果确实需要，也应该写成函数表达式，而不是函数声明语句。</p>
+</li>
+</ul>
+<p><strong>const</strong></p>
+<ul>
+<li>const实际上保证的，并不是变量的值不得改动，而是变量指向的那个内存地址不得改动</li>
+<li>将对象冻结，应该使用Object.freeze方法。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const foo &#x3D; Object.freeze(&#123;&#125;);</span><br><span class="line">&#x2F;&#x2F; 常规模式时，下面一行不起作用；</span><br><span class="line">&#x2F;&#x2F; 严格模式时，该行会报错</span><br><span class="line">foo.prop &#x3D; 123;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><strong>6种变量声明</strong></p>
+<ul>
+<li>var+function</li>
+<li>let+const</li>
+<li>import+class</li>
+</ul>
+<p><strong>顶层对象的属性</strong></p>
+<ul>
+<li>顶层对象，在浏览器环境指的是window对象，在 Node 指的是global对象</li>
+<li>顶层对象的属性与全局变量挂钩，被认为是 JavaScript 语言最大的设计败笔之一</li>
+<li>let命令、const命令、class命令声明的全局变量，不属于顶层对象的属性。也就是说，从 ES6 开始，全局变量将逐步与顶层对象的属性脱钩</li>
+</ul>
+<p><strong>global 对象</strong><br>很难找到一种方法，可以在所有情况下，都取到顶层对象。下面是两种勉强可以使用的方法。<br>垫片库可以；</p>
+<h3 id="二、解构"><a href="#二、解构" class="headerlink" title="二、解构"></a>二、解构</h3><h5 id="1-数组的解构赋值"><a href="#1-数组的解构赋值" class="headerlink" title="1. 数组的解构赋值"></a>1. 数组的解构赋值</h5><p>本身就不具备 Iterator 接口:报错；</p>
+<p><strong>惰性求值</strong><br>如果默认值是一个表达式，那么这个表达式是惰性求值的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function f() &#123;</span><br><span class="line">  console.log(&#39;aaa&#39;);</span><br><span class="line">&#125;</span><br><span class="line">let [x &#x3D; f()] &#x3D; [1];</span><br></pre></td></tr></table></figure>
+
+
+<h5 id="2-对象的解构赋值"><a href="#2-对象的解构赋值" class="headerlink" title="2. 对象的解构赋值"></a>2. 对象的解构赋值</h5><ul>
+<li>如果变量名与属性名不一致，必须写成下面这样。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let &#123; foo: baz &#125; &#x3D; &#123; foo: &#39;aaa&#39;, bar: &#39;bbb&#39; &#125;;</span><br><span class="line">baz &#x2F;&#x2F; &quot;aaa&quot;</span><br><span class="line"></span><br><span class="line">foo是匹配的模式，baz才是变量</span><br></pre></td></tr></table></figure></li>
+<li>如果要将一个已经声明的变量用于解构赋值，必须非常小心。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 错误的写法</span></span><br><span class="line"><span class="keyword">let</span> x;</span><br><span class="line">&#123;x&#125; = &#123;<span class="attr">x</span>: <span class="number">1</span>&#125;;</span><br><span class="line"><span class="comment">// SyntaxError: syntax error</span></span><br><span class="line">因为 JavaScript 引擎会将&#123;x&#125;理解成一个代码块，从而发生语法错误</span><br><span class="line">只有不将大括号写在行首</span><br><span class="line"><span class="keyword">let</span> x;</span><br><span class="line">(&#123;x&#125; = &#123;<span class="attr">x</span>: <span class="number">1</span>&#125;);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h5 id="3-数值和布尔值的解构赋值"><a href="#3-数值和布尔值的解构赋值" class="headerlink" title="3. 数值和布尔值的解构赋值"></a>3. 数值和布尔值的解构赋值</h5><p>解构赋值时，如果等号右边是数值和布尔值，则会先转为对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let &#123;toString: s&#125; &#x3D; 123;</span><br><span class="line">s &#x3D;&#x3D;&#x3D; Number.prototype.toString &#x2F;&#x2F; true</span><br><span class="line"></span><br><span class="line">let &#123;toString: s&#125; &#x3D; true;</span><br><span class="line">s &#x3D;&#x3D;&#x3D; Boolean.prototype.toString &#x2F;&#x2F; true</span><br></pre></td></tr></table></figure>
+<h5 id="4-圆括号问题"><a href="#4-圆括号问题" class="headerlink" title="4. 圆括号问题"></a>4. 圆括号问题</h5><p>对于编译器来说，一个式子到底是模式，还是表达式，没有办法从一开始就知道，必须解析到（或解析不到）等号才能知道。<br>只要有可能导致解构的歧义，就不得使用圆括号。<br>议只要有可能，就不要在模式中放置圆括号。<br>可以使用圆括号的情况只有一种：<strong>赋值语句</strong>的<strong>非模式</strong>部分，可以使用圆括号。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[(b)] &#x3D; [3]; &#x2F;&#x2F; 正确</span><br><span class="line">(&#123; p: (d) &#125; &#x3D; &#123;&#125;); &#x2F;&#x2F; 正确</span><br><span class="line">[(parseInt.prop)] &#x3D; [3]; &#x2F;&#x2F; 正确</span><br></pre></td></tr></table></figure>
+<h5 id="5-用途"><a href="#5-用途" class="headerlink" title="5. 用途"></a>5. 用途</h5><ul>
+<li><strong>交换变量的值</strong><br>[x, y] = [y, x];</li>
+<li>从函数返回多个值</li>
+<li>函数参数的定义</li>
+<li><strong>函数参数的默认值</strong></li>
+<li>提取 JSON 数据</li>
+<li>遍历 Map 结构</li>
+</ul>
+<h3 id="三、字符串的扩展"><a href="#三、字符串的扩展" class="headerlink" title="三、字符串的扩展"></a>三、字符串的扩展</h3><h5 id="1-字符的-Unicode-表示法"><a href="#1-字符的-Unicode-表示法" class="headerlink" title="1. 字符的 Unicode 表示法"></a>1. 字符的 Unicode 表示法</h5><ul>
+<li>ES6 对这一点做出了改进，只要将码点放入大括号，就能正确解读该字符。</li>
+</ul>
+<h5 id="2-codePointAt-String-fromCodePoint"><a href="#2-codePointAt-String-fromCodePoint" class="headerlink" title="2. codePointAt()+String.fromCodePoint()"></a>2. codePointAt()+String.fromCodePoint()</h5><p>JavaScript 内部，字符以 UTF-16的格式储存，每个字符固定为2个字节</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">let s &#x3D; &#39;𠮷a&#39;;</span><br><span class="line">for (let ch of s) &#123;</span><br><span class="line">  console.log(ch.codePointAt(0).toString(16));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function is32Bit(c) &#123;</span><br><span class="line">  return c.codePointAt(0) &gt; 0xFFFF;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">is32Bit(&quot;𠮷&quot;) &#x2F;&#x2F; true</span><br><span class="line">is32Bit(&quot;a&quot;) &#x2F;&#x2F; false</span><br></pre></td></tr></table></figure>
+<p>String.fromCharCode不能识别 32 位的 UTF-16 字符<br>String.fromCodePoint()<br><strong>字符串的遍历器接口</strong><br>遍历器最大的优点是可以识别大于0xFFFF的码点<br><strong>at()</strong><br>识别 Unicode 编号大于0xFFFF的字符<br><code>&#39;𠮷&#39;.at(0)</code> // “𠮷”</p>
+<p><strong>normalize()</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#39;\u01D1&#39;.normalize() &#x3D;&#x3D;&#x3D; &#39;\u004F\u030C&#39;.normalize()</span><br></pre></td></tr></table></figure>
+<h5 id="3-includes-startsWith-endsWith"><a href="#3-includes-startsWith-endsWith" class="headerlink" title="3. includes(), startsWith(), endsWith()"></a>3. includes(), startsWith(), endsWith()</h5><p>使用第二个参数n时，endsWith的行为与其他两个方法有所不同。它针对前n个字符，而其他两个方法针对从第n个位置直到字符串结束。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">let s &#x3D; &#39;Hello world!&#39;;</span><br><span class="line"></span><br><span class="line">s.startsWith(&#39;Hello&#39;) &#x2F;&#x2F; true</span><br><span class="line">s.endsWith(&#39;!&#39;) &#x2F;&#x2F; true</span><br><span class="line">s.includes(&#39;o&#39;) &#x2F;&#x2F; true</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">s.startsWith(&#39;world&#39;, 6) &#x2F;&#x2F; true</span><br><span class="line">s.endsWith(&#39;Hello&#39;, 5) &#x2F;&#x2F; true</span><br><span class="line">s.includes(&#39;Hello&#39;, 6) &#x2F;&#x2F; false</span><br></pre></td></tr></table></figure>
+<p><strong>repeat()</strong><br>repeat方法返回一个新字符串，表示将原字符串重复n次。<br><strong>padStart()，padEnd()</strong><br>ES2017 引入了字符串补全长度的功能</p>
+<h5 id="4-模板字符串"><a href="#4-模板字符串" class="headerlink" title="4. 模板字符串"></a>4. 模板字符串</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#list&#39;).html(&#96;</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;li&gt;first&lt;&#x2F;li&gt;</span><br><span class="line">  &lt;li&gt;second&lt;&#x2F;li&gt;</span><br><span class="line">&lt;&#x2F;ul&gt;</span><br><span class="line">&#96;.trim());</span><br></pre></td></tr></table></figure>
+
+
+<h5 id="5-标签模板"><a href="#5-标签模板" class="headerlink" title="5. 标签模板"></a>5. 标签模板</h5><p>用到时再看。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let a &#x3D; 5;</span><br><span class="line">let b &#x3D; 10;</span><br><span class="line"></span><br><span class="line">tag&#96;Hello $&#123; a + b &#125; world $&#123; a * b &#125;&#96;;</span><br><span class="line">&#x2F;&#x2F; 等同于</span><br><span class="line">tag([&#39;Hello &#39;, &#39; world &#39;, &#39;&#39;], 15, 50);</span><br></pre></td></tr></table></figure>
+
+
+
+      </div>
+      <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="http://tangciwei.github.io">tangciwei</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="http://tangciwei.github.io/2018/08/17/es6-%E5%9F%BA%E7%A1%80-let-%E8%A7%A3%E6%9E%84-%E5%AD%97%E7%AC%A6%E4%B8%B2/">http://tangciwei.github.io/2018/08/17/es6-%E5%9F%BA%E7%A1%80-let-%E8%A7%A3%E6%9E%84-%E5%AD%97%E7%AC%A6%E4%B8%B2/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+      <footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/es6/">es6</a>
+            </div>
+        
+        <nav class="post-nav"><a class="prev" href="/2018/08/17/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">数据类型</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    <a class="next" href="/2018/08/17/c%E8%AF%AD%E8%A8%80/">
+        <span class="next-text nav-default">c语言</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"><a href="mailto:326026238@qq.com" class="iconfont icon-email" title="email"></a>
+        <a href="https://github.com/tangciwei" target="_blank" rel="noopener" class="iconfont icon-github" title="github"></a>
+        <a href="http://weibo.com/p/1005052338797901" target="_blank" rel="noopener" class="iconfont icon-weibo" title="weibo"></a>
+        <a href="https://www.zhihu.com/people/tangciwei/activities" target="_blank" rel="noopener" class="iconfont icon-zhihu" title="zhihu"></a>
+        </div><div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even" target="_blank" rel="noopener">Even</a>
+  </span>
+
+  <span class="copyright-year">&copy;2015 - 2020<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">tangciwei</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+</body>
+</html>

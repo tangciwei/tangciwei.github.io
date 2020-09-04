@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="">
+  <head><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="linux-入门"/><meta name="keywords" content="前端,nodejs,js,javascript,vue,vue源码,html5,开发者,程序猿,编程,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验" /><link rel="alternate" href="/atom.xml" title="tangciwei's Blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0" />
+<link rel="canonical" href="http://tangciwei.github.io/2018/08/17/linux-入门/"/>
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0" />
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":"","latex":false};
+</script>
+
+    <title>linux-入门 - tangciwei's Blog</title>
+  <meta name="generator" content="Hexo 4.2.0"></head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">tangciwei's Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><a href="/">
+        <li class="mobile-menu-item">首页
+          </li>
+      </a><a href="/archives/">
+        <li class="mobile-menu-item">归档
+          </li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于
+          </li>
+      </a></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">tangciwei's Blog</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+          <a class="menu-item-link" href="/">
+            首页
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            归档
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/about/">
+            关于
+            </a>
+        </li>
+      </ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">linux-入门
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-08-17
+        </span></div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#linux安装-一"><span class="toc-text">linux安装(一)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一些介绍"><span class="toc-text">一些介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#学习方法"><span class="toc-text">学习方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#区别"><span class="toc-text">区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符界面"><span class="toc-text">字符界面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分区设备文件名"><span class="toc-text">分区设备文件名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#命令"><span class="toc-text">命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件操作-处理；"><span class="toc-text">文件操作-处理；</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件搜索命令"><span class="toc-text">文件搜索命令</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#linux入门-二"><span class="toc-text">linux入门(二)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#连接"><span class="toc-text">连接</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#格式化。"><span class="toc-text">格式化。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设备文件名"><span class="toc-text">设备文件名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分区"><span class="toc-text">分区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#挂载（盘符）"><span class="toc-text">挂载（盘符）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本命令"><span class="toc-text">基本命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ls"><span class="toc-text">ls</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件处理"><span class="toc-text">文件处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#链接"><span class="toc-text">链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件搜索命令-1"><span class="toc-text">文件搜索命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#locate"><span class="toc-text">locate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#whereis-于which"><span class="toc-text">whereis 于which</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#PATH环境变量"><span class="toc-text">PATH环境变量</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#find"><span class="toc-text">find</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#grep"><span class="toc-text">grep</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#帮助命令man"><span class="toc-text">帮助命令man</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#其他帮助命令"><span class="toc-text">其他帮助命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#压缩与解压缩"><span class="toc-text">压缩与解压缩</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#zip"><span class="toc-text">zip</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#gz"><span class="toc-text">.gz</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bz2"><span class="toc-text">.bz2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#tar-gz"><span class="toc-text">.tar.gz</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关机和重启命令"><span class="toc-text">关机和重启命令</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#linux挂载-三"><span class="toc-text">linux挂载(三)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#挂载命令"><span class="toc-text">挂载命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#查询和自动挂载"><span class="toc-text">查询和自动挂载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#挂载命令格式"><span class="toc-text">挂载命令格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#挂载光盘："><span class="toc-text">挂载光盘：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#卸载命令"><span class="toc-text">卸载命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#挂载U盘"><span class="toc-text">挂载U盘</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用户登录查看和用户交互命令"><span class="toc-text">用户登录查看和用户交互命令</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#linux-Shell-四"><span class="toc-text">linux-Shell(四)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-text">概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分类"><span class="toc-text">分类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#脚本执行方式"><span class="toc-text">脚本执行方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bash的基本功能"><span class="toc-text">Bash的基本功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-命令别名与快捷键"><span class="toc-text">1. 命令别名与快捷键</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-历史命令"><span class="toc-text">2. 历史命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-输出重定向"><span class="toc-text">3. 输出重定向</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#输出重定向"><span class="toc-text">输出重定向</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#输入重定向-少见"><span class="toc-text">输入重定向(少见)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-多命令顺序执行-管道符"><span class="toc-text">4. 多命令顺序执行:管道符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Shell中特殊符号"><span class="toc-text">5. Shell中特殊符号</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </div><div class="post-content"><h1 id="linux安装-一"><a href="#linux安装-一" class="headerlink" title="linux安装(一)"></a>linux安装(一)</h1><h3 id="一些介绍"><a href="#一些介绍" class="headerlink" title="一些介绍"></a>一些介绍</h3><p>服务器：redhat，安全性和性能，售后服务收费<br>CentOS：完全免费；<br>ubuntu：图形<br>fedora：个人版本，完整功能，功能更加强大！</p>
+<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1446028077934.png" class="" title="img">
+
+
+<a id="more"></a>
+
+
+<h3 id="学习方法"><a href="#学习方法" class="headerlink" title="学习方法"></a>学习方法</h3><ol>
+<li>如何提问？</li>
+<li>提问的智慧<ol>
+<li>问题详尽，具体知识点；</li>
+<li>贴图<h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3></li>
+</ol>
+</li>
+<li>区分大小写</li>
+<li>一切内容皆文件；</li>
+<li>没有扩展名；约定扩展名；<h3 id="字符界面"><a href="#字符界面" class="headerlink" title="字符界面"></a>字符界面</h3></li>
+<li>字符界面资源占用少</li>
+<li>减少出错，被攻击可能<h3 id="分区设备文件名"><a href="#分区设备文件名" class="headerlink" title="分区设备文件名"></a>分区设备文件名</h3>知识点：</li>
+<li>分区2. 格式化3.分区设备文件名4. 挂载</li>
+<li>/dev/sda1</li>
+<li>格式化 </li>
+<li>挂载<br>必须内存<br> /（根分区）<br> swap分区（虚拟内存，一般分内存2倍）<br>推荐分区<br> /boot（启动分区）<br> 目录作为盘符；</li>
+</ol>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>1.密码</p>
+<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1446030371705.png" class="" title="img">
+<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><p>-rw-r-r:</p>
+<ol>
+<li><p>dev硬件设备文件</p>
+</li>
+<li><p>ls</p>
+</li>
+<li><p>ls -l 参数对象</p>
+<ol>
+<li>第一位：文件类型<br>-文件<br>d目录<br>|软链接文件<br>权限7种；</li>
+</ol>
+</li>
+<li><p>所有者，所属组，其他人<br>用户跟文件的关系；<br>r ：读<br>w：写<br>x：执行</p>
+</li>
+<li><p>.ACL权限；<br>数字1. 引用计数；</p>
+</li>
+</ol>
+<p>:人性显示<br>-lh</p>
+<p>最后一次修改时间；</p>
+<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1446117640732.png" class="" title="img">
+
+<h2 id="文件操作-处理；"><a href="#文件操作-处理；" class="headerlink" title="文件操作-处理；"></a>文件操作-处理；</h2><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1446117961084.png" class="" title="img">
+<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1446118136192.png" class="" title="img">
+<p>快捷键：ctrl+L清屏；<br>tab:识别目录、命令补全；</p>
+<h2 id="文件搜索命令"><a href="#文件搜索命令" class="headerlink" title="文件搜索命令"></a>文件搜索命令</h2><p>locate：快；</p>
+<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1446119674961.png" class="" title="img">
+
+<p>find:根目录搜索</p>
+<hr>
+<h1 id="linux入门-二"><a href="#linux入门-二" class="headerlink" title="linux入门(二)"></a>linux入门(二)</h1><h3 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h3><ul>
+<li>ip<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469531892480.png" class="" title="img">
+<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469531967351.png" class="" title="img"></li>
+<li>网关<br>vi /etc/sysconfig/network<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469532278795.png" class="" title="img"></li>
+<li>DNS:<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469532318281.png" class="" title="img">
+
+</li>
+</ul>
+<h4 id="格式化。"><a href="#格式化。" class="headerlink" title="格式化。"></a>格式化。</h4><p>写入文件系统<br>ext2、3、4；</p>
+<ul>
+<li>block：<br>默认最小4kb；</li>
+<li>二维表格；<ul>
+<li>id号；<strong>i节点</strong></li>
+<li>修改时间</li>
+<li>权限<h4 id="设备文件名"><a href="#设备文件名" class="headerlink" title="设备文件名"></a>设备文件名</h4>一切皆文件<br>给每个分区定义设备文件名<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469103574489.png" class="" title="img"></li>
+</ul>
+</li>
+<li>dev：硬件</li>
+<li>a代表第一快硬盘，后面的数字代表第一个分区</li>
+<li>scsi硬盘接口：sd（老式服务器）</li>
+<li><strong>sata接口：</strong><h4 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h4><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469104417256.png" class="" title="img">
+<h4 id="挂载（盘符）"><a href="#挂载（盘符）" class="headerlink" title="挂载（盘符）"></a>挂载（盘符）</h4>目录作为挂载点：<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469104473177.png" class="" title="img">
+文件系统结构:<br>逻辑和实际情况不同 ；<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469104611932.png" class="" title="img">
+
+
+</li>
+</ul>
+<h2 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h2><h4 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h4><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469108084236.png" class="" title="img">
+
+<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469107585370.png" class="" title="img">
+<ul>
+<li>所有者</li>
+<li>所属组</li>
+<li>其他人</li>
+<li>点<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469107937617.png" class="" title="img"></li>
+<li>引用计数</li>
+<li>文件大小，字节<ul>
+<li>ls -lh</li>
+</ul>
+</li>
+</ul>
+<h2 id="文件处理"><a href="#文件处理" class="headerlink" title="文件处理"></a>文件处理</h2><ul>
+<li><code>-p</code>:递归创建</li>
+<li>cd : ~</li>
+<li><code>-</code>:上次目录</li>
+</ul>
+<p>删除空目录</p>
+<ul>
+<li>rmdir</li>
+<li>rm -rf：</li>
+</ul>
+<p>复制命令</p>
+<ul>
+<li>cp file ./b/文件名</li>
+<li>cp -r 复制目录</li>
+<li>-a :相当于-pdr</li>
+<li><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469458140525.png" class="" title="img">
+剪切：</li>
+<li>mv：操作目录不需要加-r</li>
+<li>改名操作</li>
+</ul>
+<p>常见目录<br>sbin:超级用户<br>bin：普通用户<br>boot<br>etc：<br>lib：函数库</p>
+<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469500161538.png" class="" title="img">
+<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469500192885.png" class="" title="img">
+
+
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469500375858.png" class="" title="img">
+<p>硬链接</p>
+<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469500458517.png" class="" title="img">
+<p>引用计数+1；<br>软链接</p>
+<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469501015297.png" class="" title="img">
+<p><strong>软链接：源文件一定要写绝对路径</strong></p>
+<h2 id="文件搜索命令-1"><a href="#文件搜索命令-1" class="headerlink" title="文件搜索命令"></a>文件搜索命令</h2><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469541416943.png" class="" title="img">
+<p>配置文件:locate于whereis于which</p>
+<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469541830017.png" class="" title="img">
+<h3 id="locate"><a href="#locate" class="headerlink" title="locate"></a>locate</h3><ul>
+<li>速度快</li>
+<li>只可以按照文件名搜索<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469541499561.png" class="" title="img"></li>
+<li>updatedb:更新数据库<h3 id="whereis-于which"><a href="#whereis-于which" class="headerlink" title="whereis 于which"></a>whereis 于which</h3>whereis：系统命令<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469542038735.png" class="" title="img"></li>
+<li>-b：</li>
+<li>-m:<br>which：可以查看别名</li>
+</ul>
+<p><strong>shell 内置命令：不能找到</strong></p>
+<h4 id="PATH环境变量"><a href="#PATH环境变量" class="headerlink" title="PATH环境变量"></a>PATH环境变量</h4><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469542397422.png" class="" title="img">
+<ul>
+<li>执行命令：用绝对路径<br>例如：<code>/bin/ls</code></li>
+<li>环境变量：定义用户操作环境的变量<h3 id="find"><a href="#find" class="headerlink" title="find"></a>find</h3>耗资源<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469542884188.png" class="" title="img">
+通配符：双引号</li>
+<li>*：匹配任意字符</li>
+<li>？：任意一个字符</li>
+<li><code>[]</code>:任意一个中括号内的字符<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find .&#x2F; -name &quot;a*&quot;</span><br></pre></td></tr></table></figure>
+<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469605385539.png" class="" title="img"></li>
+<li>find ./ -iname “”</li>
+<li>find /root -nouser<ul>
+<li>一般没有所有者文件是垃圾文件</li>
+<li>特殊：<ul>
+<li>内核产生文件如：sys proc文件</li>
+<li>外来文件：U盘；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>时间搜索<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469605728676.png" class="" title="img"></li>
+<li>文件大小<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469606441797.png" class="" title="img">
+兆字节：M<br>如果不加单位：搜索的是多少个扇区大小。</li>
+<li>复杂操作:-a -o<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469606811807.png" class="" title="img">
+<code>-exec 和{} \;</code>是规定<br>中间的命令；<h3 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h3>包含匹配：<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469607297690.png" class="" title="img">
+<code>-v</code> :不包含，取反<br><code>-i</code>: 忽略大小写<br>区别：<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469607672152.png" class="" title="img">
+
+</li>
+</ul>
+<h2 id="帮助命令man"><a href="#帮助命令man" class="headerlink" title="帮助命令man"></a>帮助命令man</h2><p><code>/ -d</code></p>
+<ul>
+<li><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469608212492.png" class="" title="img"></li>
+<li><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469608298719.png" class="" title="img">
+whatis ls</li>
+<li><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469608722828.png" class="" title="img">
+<h3 id="其他帮助命令"><a href="#其他帮助命令" class="headerlink" title="其他帮助命令"></a>其他帮助命令</h3></li>
+<li><code>--help</code></li>
+<li><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469608989588.png" class="" title="img">
+shell 用户和计算机交互的接口；<br>自带的没有可执行文件：比如<code>cd</code>;<br>help:专门获取内部命令：</li>
+<li>详细命令<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469609366928.png" class="" title="img">
+<h2 id="压缩与解压缩"><a href="#压缩与解压缩" class="headerlink" title="压缩与解压缩"></a>压缩与解压缩</h2><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469609886838.png" class="" title="img">
+<h4 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h4><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469609924476.png" class="" title="img">
+解压缩：<br>unzip 压缩文件<h4 id="gz"><a href="#gz" class="headerlink" title=".gz"></a>.gz</h4><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469610427249.png" class="" title="img">
+<code>&gt;</code>:把命令的结果写入指定文件<br>gzip -c file：把文件写到屏幕；</li>
+<li>解压缩<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469611703641.png" class="" title="img">
+<h4 id="bz2"><a href="#bz2" class="headerlink" title=".bz2"></a>.bz2</h4><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469611850040.png" class="" title="img"></li>
+<li>解压缩<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469612019525.png" class="" title="img">
+<h4 id="tar-gz"><a href="#tar-gz" class="headerlink" title=".tar.gz"></a>.tar.gz</h4></li>
+<li>打包命令tar<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469612205239.png" class="" title="img"></li>
+<li>解打包命令<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469612402302.png" class="" title="img"></li>
+<li>.tar.gz压缩格式<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469612521452.png" class="" title="img"></li>
+<li>.tar.bz2压缩格式<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469612726588.png" class="" title="img"></li>
+<li>指定解压缩位置：-C：只能写在最后<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469612943986.png" class="" title="img"></li>
+<li>压缩多文件<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469613008281.png" class="" title="img">
+<h2 id="关机和重启命令"><a href="#关机和重启命令" class="headerlink" title="关机和重启命令"></a>关机和重启命令</h2></li>
+<li><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469613369575.png" class="" title="img">
+<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469613535958.png" class="" title="img">：`&`:放入后台执行
+比较安全<br>重启：reboot<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1469613885257.png" class="" title="img"></li>
+<li>runlevel</li>
+<li>cat /etc/inittab</li>
+<li>退出登录：logout</li>
+</ul>
+<hr>
+<h1 id="linux挂载-三"><a href="#linux挂载-三" class="headerlink" title="linux挂载(三)"></a>linux挂载(三)</h1><h2 id="挂载命令"><a href="#挂载命令" class="headerlink" title="挂载命令"></a>挂载命令</h2><h3 id="查询和自动挂载"><a href="#查询和自动挂载" class="headerlink" title="查询和自动挂载"></a>查询和自动挂载</h3><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1470140296898.png" class="" title="img">
+<h3 id="挂载命令格式"><a href="#挂载命令格式" class="headerlink" title="挂载命令格式"></a>挂载命令格式</h3><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1470140643296.png" class="" title="img">
+
+<p>写脚本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vi hello.sh</span><br><span class="line">#  !&#x2F;bin&#x2F;bash</span><br><span class="line">echo &quot;hello world&quot;</span><br><span class="line">chmod 755 hello.sh</span><br></pre></td></tr></table></figure>
+<p>选项</p>
+<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1470141133433.png" class="" title="img">
+<h3 id="挂载光盘："><a href="#挂载光盘：" class="headerlink" title="挂载光盘："></a>挂载光盘：</h3><ul>
+<li>选择镜像安装DVD1.iso<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1470141251703.png" class="" title="img">
+先设备文件名，后挂载点<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount -t iso9660 &#x2F;dev&#x2F;sr0 &#x2F;mnt&#x2F;cdrom&#x2F;</span><br></pre></td></tr></table></figure>
+<h3 id="卸载命令"><a href="#卸载命令" class="headerlink" title="卸载命令"></a>卸载命令</h3><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1470142070770.png" class="" title="img">
+卸载不能在挂载点卸载。<h3 id="挂载U盘"><a href="#挂载U盘" class="headerlink" title="挂载U盘"></a>挂载U盘</h3><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1470143955197.png" class="" title="img">
+
+</li>
+</ul>
+<h2 id="用户登录查看和用户交互命令"><a href="#用户登录查看和用户交互命令" class="headerlink" title="用户登录查看和用户交互命令"></a>用户登录查看和用户交互命令</h2><ul>
+<li>w<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1470144285594.png" class="" title="img"></li>
+<li>who</li>
+<li>last<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1470144517601.png" class="" title="img"></li>
+<li>lastlog<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1470144640467.png" class="" title="img">
+
+</li>
+</ul>
+<hr>
+<h1 id="linux-Shell-四"><a href="#linux-Shell-四" class="headerlink" title="linux-Shell(四)"></a>linux-Shell(四)</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><ul>
+<li>命令行解释器</li>
+<li>解释执行脚本语言</li>
+<li>可以直接调用系统命令<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1470145256231.png" class="" title="img">
+<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1470145334700.png" class="" title="img">
+<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1470145573951.png" class="" title="img"></li>
+<li>linux:Bash</li>
+<li>查看当前SHELL<code>echo $SHELL</code></li>
+<li>兼容性：查看/etc/shells<h2 id="脚本执行方式"><a href="#脚本执行方式" class="headerlink" title="脚本执行方式"></a>脚本执行方式</h2></li>
+<li>echo<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1470146081343.png" class="" title="img">
+例子：<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1470146409570.png" class="" title="img">
+<code>\e[;31m</code>开启颜色显示<br><code>\e[0m</code>:结束</li>
+<li>第一个脚本<br><code>#</code>:表示注释</li>
+<li>脚本执行<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1470146882920.png" class="" title="img">
+<code>chmod 755 hello.sh</code><h2 id="Bash的基本功能"><a href="#Bash的基本功能" class="headerlink" title="Bash的基本功能"></a>Bash的基本功能</h2><h3 id="1-命令别名与快捷键"><a href="#1-命令别名与快捷键" class="headerlink" title="1. 命令别名与快捷键"></a>1. 命令别名与快捷键</h3>意义，不随系统升级更换命令而改变自己的习惯</li>
+<li>查看与设定别名<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1470190996767.png" class="" title="img"></li>
+<li>别名永久生效<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1470191316771.png" class="" title="img">
+或者：<code>source .bashrc</code></li>
+<li>命令生效顺序<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1470191551350.png" class="" title="img">
+绝对&gt;别名&gt;bash内部命令<code>$</code>PATH环境变量(外来命令)</li>
+<li>快捷键<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1470191725877.png" class="" title="img">
+
+</li>
+</ul>
+<h3 id="2-历史命令"><a href="#2-历史命令" class="headerlink" title="2. 历史命令"></a>2. 历史命令</h3><ul>
+<li><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1471503826780.png" class="" title="img"></li>
+<li>查看：history</li>
+<li>文件中保存的是上次注销之前的命令</li>
+<li>保存条数：<code>vi /etc/profile</code></li>
+<li><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1471504215465.png" class="" title="img">
+
+</li>
+</ul>
+<h3 id="3-输出重定向"><a href="#3-输出重定向" class="headerlink" title="3. 输出重定向"></a>3. 输出重定向</h3><h4 id="输出重定向"><a href="#输出重定向" class="headerlink" title="输出重定向"></a>输出重定向</h4><ul>
+<li><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1471504632475.png" class="" title="img"></li>
+<li><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1471504781178.png" class="" title="img">
+注意，错误输出<code>2&gt;&gt;</code>以及<code>2&gt;</code>后面没有空格</li>
+<li>实际中用的多的：<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1471505270705.png" class="" title="img"></li>
+<li><code>ls &amp;&gt;/dev/null</code>:垃圾站</li>
+<li>最常见的2条<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">命令 &amp;&gt;文件</span><br><span class="line">命令&gt;&gt;文件一 2&gt;&gt;文件二</span><br></pre></td></tr></table></figure>
+<h4 id="输入重定向-少见"><a href="#输入重定向-少见" class="headerlink" title="输入重定向(少见)"></a>输入重定向(少见)</h4><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1471505959327.png" class="" title="img"></li>
+<li>输入<code>wc</code> <code>control + d</code></li>
+</ul>
+<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1471506136617.png" class="" title="img">
+<ul>
+<li>统计之间的内容<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1471506270525.png" class="" title="img">
+<h3 id="4-多命令顺序执行-管道符"><a href="#4-多命令顺序执行-管道符" class="headerlink" title="4. 多命令顺序执行:管道符"></a>4. 多命令顺序执行:管道符</h3></li>
+<li><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1471506375562.png" class="" title="img">
+例子：<br>模拟if else<br><code>ls &amp;&amp; echo yes ||echo no</code></li>
+<li><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1471507133790.png" class="" title="img">
+例：<br><code>ls -l /etc | more</code><br>服务器连接了多少人：<br><code>netstat -an | grep ESTABLISHED | wc -l</code><h3 id="5-Shell中特殊符号"><a href="#5-Shell中特殊符号" class="headerlink" title="5. Shell中特殊符号"></a>5. Shell中特殊符号</h3></li>
+<li>匹配文件名和目录<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1471507622494.png" class="" title="img"></li>
+<li><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1471507843048.png" class="" title="img"></li>
+<li>推荐用<code>$()</code><img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1471508111250.png" class="" title="img"></li>
+</ul>
+
+      </div>
+      <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="http://tangciwei.github.io">tangciwei</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="http://tangciwei.github.io/2018/08/17/linux-%E5%85%A5%E9%97%A8/">http://tangciwei.github.io/2018/08/17/linux-%E5%85%A5%E9%97%A8/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+      <footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/linux/">linux</a>
+            </div>
+        
+        <nav class="post-nav"><a class="prev" href="/2018/08/17/git/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">git</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    <a class="next" href="/2018/08/17/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
+        <span class="next-text nav-default">数据类型</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"><a href="mailto:326026238@qq.com" class="iconfont icon-email" title="email"></a>
+        <a href="https://github.com/tangciwei" target="_blank" rel="noopener" class="iconfont icon-github" title="github"></a>
+        <a href="http://weibo.com/p/1005052338797901" target="_blank" rel="noopener" class="iconfont icon-weibo" title="weibo"></a>
+        <a href="https://www.zhihu.com/people/tangciwei/activities" target="_blank" rel="noopener" class="iconfont icon-zhihu" title="zhihu"></a>
+        </div><div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even" target="_blank" rel="noopener">Even</a>
+  </span>
+
+  <span class="copyright-year">&copy;2015 - 2020<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">tangciwei</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+</body>
+</html>

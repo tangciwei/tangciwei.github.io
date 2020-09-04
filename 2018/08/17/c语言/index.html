@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="">
+  <head><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="c语言"/><meta name="keywords" content="前端,nodejs,js,javascript,vue,vue源码,html5,开发者,程序猿,编程,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验" /><link rel="alternate" href="/atom.xml" title="tangciwei's Blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0" />
+<link rel="canonical" href="http://tangciwei.github.io/2018/08/17/c语言/"/>
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0" />
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":"","latex":false};
+</script>
+
+    <title>c语言 - tangciwei's Blog</title>
+  <meta name="generator" content="Hexo 4.2.0"></head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">tangciwei's Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><a href="/">
+        <li class="mobile-menu-item">首页
+          </li>
+      </a><a href="/archives/">
+        <li class="mobile-menu-item">归档
+          </li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于
+          </li>
+      </a></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">tangciwei's Blog</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+          <a class="menu-item-link" href="/">
+            首页
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            归档
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/about/">
+            关于
+            </a>
+        </li>
+      </ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">c语言
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-08-17
+        </span></div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#变量和数据类型"><span class="toc-text">变量和数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#指针"><span class="toc-text">指针</span></a></li></ol>
+    </div>
+  </div><div class="post-content"><ul>
+<li>字符集定义了字符和二进制的对应关系，为每个字符分配了唯一的编号</li>
+<li>而字符编码规定了如何将字符的编号存储到计算机中</li>
+<li>Unicode 可以使用的编码方案</li>
+<li>多字节字符，或者窄字符</li>
+<li>宽字符。</li>
+</ul>
+<a id="more"></a>
+
+<h3 id="变量和数据类型"><a href="#变量和数据类型" class="headerlink" title="变量和数据类型"></a>变量和数据类型</h3><p>称为格式控制符</p>
+<ul>
+<li>%d</li>
+<li>%f</li>
+<li>%c</li>
+<li>%s</li>
+</ul>
+<p>sizeof：sizeof 是C语言中的操作符，不是函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">printf(&quot;a&#x3D;%#ho, b&#x3D;%#x, c&#x3D;%ld\n&quot;, a, b, c);</span><br><span class="line"># 作用：有进制的符号</span><br></pre></td></tr></table></figure>
+
+<p>char 是一个字符类型，是用来存放字符的，但是它同时也是一个整数类型，也可以用来存放整数</p>
+<ul>
+<li>%g 默认最多保留六位有效数字，包括整数部分和小数部分；%f 和 %e 默认保留六位小数，只包括小数部分。</li>
+<li>%g 不会在最后强加 0 来凑够有效数字的位数，而 %f 和 %e 会在最后强加 0 来凑够小数部分的位数。</li>
+<li>计算机在存储字符时并不是真的要存储字符实体，而是存储该字符在字符集中的编号</li>
+<li>无论在哪个字符集中，字符编号都是一个整数；从这个角度考虑，字符类型和整数类型本质上没有什么区别。</li>
+<li>wchar_t：宽字符类型。wchar_t 其实是用 typedef 关键字定义的一个别名</li>
+<li>putchar、printf 只能输出不加L前缀的窄字符</li>
+<li>putwchar 和 wprintf：</li>
+<li>在输出宽字符之前还要使用 setlocale 函数进行本地化设置</li>
+<li>对于转义字符来说，只能使用八进制或者十六进制。</li>
+<li>余数可以是正数也可以是负数，由 % 左边的整数决定：</li>
+<li>printf() 执行结束以后数据并没有直接输出到显示器上，而是放入了缓冲区，直到遇见换行符\n才将缓冲区中的数据输出到显示器上</li>
+<li>&amp;称为取地址符</li>
+<li>里看到的地址都是假的，是虚拟地址<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> str1[] = <span class="string">"http://c.biancheng.net"</span>; 读写</span><br><span class="line"><span class="keyword">char</span> *str2 = <span class="string">"C语言中文网"</span>;读</span><br></pre></td></tr></table></figure></li>
+<li>scanf() 读取数据时需要的是数据的地址</li>
+<li>字符串的名字会自动转换为字符串的地址</li>
+<li>gets() 能读取含有空格的字符串，而 scanf() 不能。</li>
+</ul>
+<hr>
+<ul>
+<li>case 后面必须是一个整数</li>
+<li>break:跳出循环</li>
+<li>continue</li>
+<li>数组可以作为缓存（临时存储数据的一块内存）使用</li>
+<li>按行连续赋值应该写作：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int a[5][3]&#x3D;&#123;80, 75, 92, 61, 65, 71, 59, 63, 70, 85, 87, 90, 76, 77, 85&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>字符数组只有在定义时才能将整个字符串一次性地赋值给它，一旦定义完了，就只能一个字符一个字符地赋值了</li>
+<li>‘\0’是 ASCII 码表中的第 0 个字符，英文称为 NUL: 它在C语言中唯一的作用就是作为字符串结束标志。</li>
+<li>需要注意的是，逐个字符地给数组赋值并不会自动添加’\0’</li>
+<li>更加专业的做法是将数组的所有元素都初始化为“零”值</li>
+<li>因为字符串名字或者数组名字在使用的过程中一般都会转换为地址</li>
+<li>静态数组。</li>
+<li>在用字符串给字符数组赋值时，要保证数组长度大于字符串长度，以容纳结束符’\0’。</li>
+</ul>
+</li>
+<li>普通数组（固定长度的数组）是在编译期间分配内存的，而变长数组是在运行期间分配内存的。</li>
+<li>函数不能嵌套定义</li>
+<li>函数声明</li>
+<li>头文件中包含的都是函数声明，而不是函数定义，函数定义都在系统库中</li>
+<li>以#号开头的命令称为预处理命令</li>
+<li>在编译之前对源文件进行简单加工的过程，就称为预处理（即预先处理、提前处理）</li>
+<li>文件包含允许嵌套，也就是说在一个被包含的文件中又可以包含另一个文件。</li>
+</ul>
+<hr>
+<ul>
+<li>宏定义是预处理命令的一种，它允许用一个标识符来表示一个字符串</li>
+<li>宏定义不是说明或语句，在行末不必加分号，如加上分号则连分号也一起替换</li>
+<li>终止其作用域可使用#undef命令</li>
+<li>宏在编译之前就被处理掉了，它没有机会参与编译，也不会占用内存</li>
+<li>条件编译：条件编译是预处理程序的功能</li>
+<li><code>#if</code> 后面跟的是“整型常量表达式”</li>
+</ul>
+<h3 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h3><ul>
+<li>指针变量</li>
+<li>指针运算符</li>
+<li>使用指针是间接获取数据，使用变量名是直接获取数据，前者比后者的代价要高</li>
+<li><code>*</code>可以用在指针变量的定义中，表明这是一个指针变量</li>
+<li>使用指针变量时在前面加<code>*</code>表示获取指针指向的数据</li>
+<li>如果一个指针指向了数组，我们就称它为数组指针</li>
+<li>根据数组指针不能逆推出整个数组元素的个数，以及数组从哪里开始、到哪里结束等信息</li>
+<li>数组名是常量</li>
+<li>字符串常量，意思很明显，常量只能读取不能写入</li>
+<li>不管使用哪种方式传递数组，都不能在函数内部求得数组长度，因为 intArr 仅仅是一个指针，而不是真正的数组</li>
+<li>指针函数</li>
+<li>对没有初始化的指针赋值为 NULL：<br><code>char *str = NULL;</code></li>
+<li>从整体上来看，NULL 指向了地址为 0 的内存，而不是前面说的不指向任何数据。</li>
+<li>在大多数操作系统中，极小的地址通常不保存数据，也不允许程序访问，NULL 可以指向这段地址区间中的任何一个地址。</li>
+<li>void *表示一个有效指针，它确实指向实实在在的数据，只是数据的类型尚未确定</li>
+<li>C语言动态内存分配函数 malloc() 的返回值就是void *类型</li>
+<li><code>void *</code>，它不是空指针的意思，而是实实在在的指针，只是指针指向的内存中不知道保存的是什么类型的数据。</li>
+<li>sizeof 是根据符号类型来求长度的</li>
+<li>C语言标准规定，当数组名作为数组定义的标识符（也就是定义或声明数组时）、sizeof 或 &amp; 的操作数时，它才表示整个数组本身，在其他的表达式中，数组名会被转换为指向第 0 个元素的指针（地址）。</li>
+<li>对数组的引用 a[i] 在编译时总是被编译器改写成<code>*(a+i)</code>的形式</li>
+<li>取下标操作符[ ]是建立在指针的基础上</li>
+<li><strong>函数内部</strong>，arr 会被转换成一个指针变量，编译器为 arr 分配 4 个字节的内存</li>
+<li>指针数组（每个元素都是指针）</li>
+<li>二维数组指针:int (*p)[4] = a;</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">3</span>][<span class="number">4</span>] = &#123; &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;, &#123;<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>&#125;, &#123;<span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>&#125; &#125;;</span><br><span class="line">    <span class="keyword">int</span> (*p)[<span class="number">4</span>] = a;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, <span class="keyword">sizeof</span>(*(p+<span class="number">1</span>)));</span><br><span class="line">    <span class="number">16</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>指针数组和二维数组指针</strong></li>
+<li>函数指针</li>
+</ul>
+<p><a href="http://c.biancheng.net/cpp/html/3249.html" target="_blank" rel="noopener">只需一招，彻底攻克C语言指针</a></p>
+<hr>
+<ul>
+<li>复杂数据类型或构造数据类型。</li>
+<li>结构体是一种自定义的数据类型，是创建变量的模板，不占用内存空间；结构体变量才包含了实实在在的数据，需要内存空间来存储。</li>
+<li>数组名在表达式中会被转换为数组指针，而结构体变量名不会</li>
+<li>结构体变量名代表的是整个集合本身，作为函数参数时传递的整个集合，也就是所有成员，而不是像数组一样被编译器转换成一个指针</li>
+<li><code>enum week{ Mon = 1, Tues, Wed, Thurs, Fri, Sat, Sun };</code></li>
+<li>不能用&amp;取得它们的地址。这就是枚举的本质。</li>
+<li>操作文件的正确流程为：打开文件 –&gt; 读写文件 –&gt; 关闭文件</li>
+<li>fclose(fp);</li>
+</ul>
+
+      </div>
+      <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="http://tangciwei.github.io">tangciwei</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="http://tangciwei.github.io/2018/08/17/c%E8%AF%AD%E8%A8%80/">http://tangciwei.github.io/2018/08/17/c%E8%AF%AD%E8%A8%80/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+      <footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/c/">c</a>
+            </div>
+        
+        <nav class="post-nav"><a class="prev" href="/2018/08/17/es6-%E5%9F%BA%E7%A1%80-let-%E8%A7%A3%E6%9E%84-%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">es6-基础-let+解构+字符串</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    <a class="next" href="/2018/08/17/util/">
+        <span class="next-text nav-default">util</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"><a href="mailto:326026238@qq.com" class="iconfont icon-email" title="email"></a>
+        <a href="https://github.com/tangciwei" target="_blank" rel="noopener" class="iconfont icon-github" title="github"></a>
+        <a href="http://weibo.com/p/1005052338797901" target="_blank" rel="noopener" class="iconfont icon-weibo" title="weibo"></a>
+        <a href="https://www.zhihu.com/people/tangciwei/activities" target="_blank" rel="noopener" class="iconfont icon-zhihu" title="zhihu"></a>
+        </div><div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even" target="_blank" rel="noopener">Even</a>
+  </span>
+
+  <span class="copyright-year">&copy;2015 - 2020<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">tangciwei</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="">
+  <head><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="唐词伟的个人博客"/><meta name="keywords" content="前端,nodejs,js,javascript,vue,vue源码,html5,开发者,程序猿,编程,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验" /><link rel="alternate" href="/atom.xml" title="tangciwei's Blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0" />
+<link rel="canonical" href="http://tangciwei.github.io/page/2/"/>
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0" />
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":"","latex":false};
+</script>
+
+    <title>tangciwei's Blog</title>
+  <meta name="generator" content="Hexo 4.2.0"></head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">tangciwei's Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><a href="/">
+        <li class="mobile-menu-item">首页
+          </li>
+      </a><a href="/archives/">
+        <li class="mobile-menu-item">归档
+          </li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于
+          </li>
+      </a></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">tangciwei's Blog</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+          <a class="menu-item-link" href="/">
+            首页
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            归档
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/about/">
+            关于
+            </a>
+        </li>
+      </ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><section id="posts" class="posts"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title"><a class="post-link" href="/2018/09/10/%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%9A%84reduce/">如何实现一个异步的reduce</a>
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-09-10
+        </span></div>
+    </header>
+
+    <div class="post-content"><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">asyncAdd</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            resolve(a + b);</span><br><span class="line">        &#125;, <span class="number">500</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">asyncReduce</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params">arr</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> arr.reduce(<span class="function">(<span class="params">old, newOne</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 简化</span></span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(old).then(<span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> fn.call(<span class="keyword">this</span>, data, newOne);</span><br><span class="line">            &#125;);</span><br><span class="line">            <span class="comment">// return new Promise((resolve) =&gt; &#123;</span></span><br><span class="line">            <span class="comment">//     Promise.resolve(old).then(data =&gt; &#123;</span></span><br><span class="line">            <span class="comment">//         resolve(fn(data, newOne));</span></span><br><span class="line">            <span class="comment">//     &#125;);</span></span><br><span class="line">            <span class="comment">// &#125;);</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">asyncReduce(asyncAdd)([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]).then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+          <div class="read-more">
+            <a href="/2018/09/10/%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E7%9A%84reduce/" class="read-more-link">阅读更多</a>
+          </div>
+        </div></article>
+      <article class="post">
+    <header class="post-header">
+      <h1 class="post-title"><a class="post-link" href="/2018/09/08/%E7%BA%BF%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B/">线程和进程</a>
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-09-08
+        </span></div>
+    </header>
+
+    <div class="post-content"><h2 id="一、区别"><a href="#一、区别" class="headerlink" title="一、区别"></a>一、区别</h2><p>进程是<strong>操作系统分配资源</strong>的最小单位，线程是<strong>程序执行</strong>的最小单位<br>线程是一个进程中代码的<strong>不同执行路线</strong><br>各个线程之间<strong>共享程序的内存空间</strong><br>线程上下文切换比进程上下文切换要<strong>快得多</strong></p>
+<p>多线程是指程序中包含<strong>多个执行流</strong></p>
+          <div class="read-more">
+            <a href="/2018/09/08/%E7%BA%BF%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B/" class="read-more-link">阅读更多</a>
+          </div>
+        </div></article>
+      <article class="post">
+    <header class="post-header">
+      <h1 class="post-title"><a class="post-link" href="/2018/09/08/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/">事件循环</a>
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-09-08
+        </span></div>
+    </header>
+
+    <div class="post-content"><ul>
+<li>new Promise()当中的内容同步执行；</li>
+<li>process.nextTick执行最快，其次Promise。nextTick会比其他微任务、宏任务执行快</li>
+<li>宏任务和微任务：</li>
+</ul>
+<img src="/2018/09/08/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/15319885289186.png" class="" title="img">
+          <div class="read-more">
+            <a href="/2018/09/08/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/" class="read-more-link">阅读更多</a>
+          </div>
+        </div></article>
+      <article class="post">
+    <header class="post-header">
+      <h1 class="post-title"><a class="post-link" href="/2018/08/17/%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E5%BB%BA%E8%AE%BE/">技术团队建设</a>
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-08-17
+        </span></div>
+    </header>
+
+    <div class="post-content"><h2 id="技术团队建设"><a href="#技术团队建设" class="headerlink" title="技术团队建设"></a>技术团队建设</h2><h3 id="氛围"><a href="#氛围" class="headerlink" title="氛围"></a>氛围</h3><p><a href="https://mp.weixin.qq.com/s?__biz=MjM5MDE0Mjc4MA==&mid=2650995610&idx=1&sn=d44ad482dc30a3eae727571f2630a348" target="_blank" rel="noopener">如何落地和管理一个“大前端”团队?饿了么大前端团队解密</a></p>
+<ul>
+<li>学习姿态</li>
+<li>鼓励创造结果而不是追求上班时间</li>
+<li>营造环境</li>
+<li><strong>技术追求、归属感、成就感</strong></li>
+</ul>
+          <div class="read-more">
+            <a href="/2018/08/17/%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E5%BB%BA%E8%AE%BE/" class="read-more-link">阅读更多</a>
+          </div>
+        </div></article>
+      <article class="post">
+    <header class="post-header">
+      <h1 class="post-title"><a class="post-link" href="/2018/08/17/git/">git</a>
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-08-17
+        </span></div>
+    </header>
+
+    <div class="post-content"><h2 id="配置命令"><a href="#配置命令" class="headerlink" title="配置命令"></a>配置命令</h2><ul>
+<li>配置全局用户名邮箱<ol>
+<li>git config –global user.name “a1846”</li>
+<li>git config –golbal user.email  “xxx”</li>
+</ol>
+</li>
+<li>查看配置信息：git config –list</li>
+</ul>
+          <div class="read-more">
+            <a href="/2018/08/17/git/" class="read-more-link">阅读更多</a>
+          </div>
+        </div></article>
+      <article class="post">
+    <header class="post-header">
+      <h1 class="post-title"><a class="post-link" href="/2018/08/17/linux-%E5%85%A5%E9%97%A8/">linux-入门</a>
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-08-17
+        </span></div>
+    </header>
+
+    <div class="post-content"><h1 id="linux安装-一"><a href="#linux安装-一" class="headerlink" title="linux安装(一)"></a>linux安装(一)</h1><h3 id="一些介绍"><a href="#一些介绍" class="headerlink" title="一些介绍"></a>一些介绍</h3><p>服务器：redhat，安全性和性能，售后服务收费<br>CentOS：完全免费；<br>ubuntu：图形<br>fedora：个人版本，完整功能，功能更加强大！</p>
+<img src="/2018/08/17/linux-%E5%85%A5%E9%97%A8/1446028077934.png" class="" title="img">
+          <div class="read-more">
+            <a href="/2018/08/17/linux-%E5%85%A5%E9%97%A8/" class="read-more-link">阅读更多</a>
+          </div>
+        </div></article>
+      <article class="post">
+    <header class="post-header">
+      <h1 class="post-title"><a class="post-link" href="/2018/08/17/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">数据类型</a>
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-08-17
+        </span></div>
+    </header>
+
+    <div class="post-content"><h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><ul>
+<li>基本类型6：String、Number、Boolean、Symbol、Undefined、Null </li>
+<li>引用类型1：Object<br>（Function 、Array、RegExp、Date）<br>基本类型：其存储在栈中，即按值访问<br>引用：堆中，按址访问</li>
+</ul>
+          <div class="read-more">
+            <a href="/2018/08/17/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" class="read-more-link">阅读更多</a>
+          </div>
+        </div></article>
+      <article class="post">
+    <header class="post-header">
+      <h1 class="post-title"><a class="post-link" href="/2018/08/17/es6-%E5%9F%BA%E7%A1%80-let-%E8%A7%A3%E6%9E%84-%E5%AD%97%E7%AC%A6%E4%B8%B2/">es6-基础-let+解构+字符串</a>
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-08-17
+        </span></div>
+    </header>
+
+    <div class="post-content"><h3 id="一、let-const"><a href="#一、let-const" class="headerlink" title="一、let+const"></a>一、let+const</h3><p>暂时性死区</p>
+<p><strong>块级作用域优点</strong></p>
+<ul>
+<li>避免内层变量覆盖外层；</li>
+<li>用来计数的循环变量泄露为全局变量。</li>
+<li>立即执行函数表达式（IIFE）不再必要了</li>
+</ul>
+          <div class="read-more">
+            <a href="/2018/08/17/es6-%E5%9F%BA%E7%A1%80-let-%E8%A7%A3%E6%9E%84-%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="read-more-link">阅读更多</a>
+          </div>
+        </div></article>
+      <article class="post">
+    <header class="post-header">
+      <h1 class="post-title"><a class="post-link" href="/2018/08/17/c%E8%AF%AD%E8%A8%80/">c语言</a>
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-08-17
+        </span></div>
+    </header>
+
+    <div class="post-content"><ul>
+<li>字符集定义了字符和二进制的对应关系，为每个字符分配了唯一的编号</li>
+<li>而字符编码规定了如何将字符的编号存储到计算机中</li>
+<li>Unicode 可以使用的编码方案</li>
+<li>多字节字符，或者窄字符</li>
+<li>宽字符。</li>
+</ul>
+          <div class="read-more">
+            <a href="/2018/08/17/c%E8%AF%AD%E8%A8%80/" class="read-more-link">阅读更多</a>
+          </div>
+        </div></article>
+      <article class="post">
+    <header class="post-header">
+      <h1 class="post-title"><a class="post-link" href="/2018/08/17/util/">util</a>
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-08-17
+        </span></div>
+    </header>
+
+    <div class="post-content"><h2 id="工具库"><a href="#工具库" class="headerlink" title="工具库"></a>工具库</h2><ul>
+<li>cli-table2</li>
+</ul>
+
+        </div></article>
+      <nav class="pagination"><a class="prev" href="/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text">上一页</span>
+      </a>
+    <a class="next" href="/page/3/">
+        <span class="next-text">下一页</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></section></div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"><a href="mailto:326026238@qq.com" class="iconfont icon-email" title="email"></a>
+        <a href="https://github.com/tangciwei" target="_blank" rel="noopener" class="iconfont icon-github" title="github"></a>
+        <a href="http://weibo.com/p/1005052338797901" target="_blank" rel="noopener" class="iconfont icon-weibo" title="weibo"></a>
+        <a href="https://www.zhihu.com/people/tangciwei/activities" target="_blank" rel="noopener" class="iconfont icon-zhihu" title="zhihu"></a>
+        </div><div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even" target="_blank" rel="noopener">Even</a>
+  </span>
+
+  <span class="copyright-year">&copy;2015 - 2020<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">tangciwei</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+</body>
+</html>

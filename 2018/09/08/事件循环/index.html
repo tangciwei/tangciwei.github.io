@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="">
+  <head><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="事件循环"/><meta name="keywords" content="前端,nodejs,js,javascript,vue,vue源码,html5,开发者,程序猿,编程,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验" /><link rel="alternate" href="/atom.xml" title="tangciwei's Blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0" />
+<link rel="canonical" href="http://tangciwei.github.io/2018/09/08/事件循环/"/>
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0" />
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":"","latex":false};
+</script>
+
+    <title>事件循环 - tangciwei's Blog</title>
+  <meta name="generator" content="Hexo 4.2.0"></head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">tangciwei's Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><a href="/">
+        <li class="mobile-menu-item">首页
+          </li>
+      </a><a href="/archives/">
+        <li class="mobile-menu-item">归档
+          </li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于
+          </li>
+      </a></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">tangciwei's Blog</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+          <a class="menu-item-link" href="/">
+            首页
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            归档
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/about/">
+            关于
+            </a>
+        </li>
+      </ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">事件循环
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-09-08
+        </span></div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#浏览器"><span class="toc-text">浏览器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#node端"><span class="toc-text">node端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#示例"><span class="toc-text">示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-text">参考</span></a></li></ol>
+    </div>
+  </div><div class="post-content"><ul>
+<li>new Promise()当中的内容同步执行；</li>
+<li>process.nextTick执行最快，其次Promise。nextTick会比其他微任务、宏任务执行快</li>
+<li>宏任务和微任务：</li>
+</ul>
+<img src="/2018/09/08/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/15319885289186.png" class="" title="img">
+
+
+<a id="more"></a>
+
+
+<p>图主线程的绿色部分，还是表示运行时间，而橙色部分表示空闲时间。每当遇到I/O的时候，主线程就让Event Loop线程去通知相应的I/O程序，然后接着往后运行，所以不存在红色的等待时间。等到I/O程序完成操作，Event Loop线程再把结果返回主线程。主线程就调用事先设定的回调函数，完成整个任务。</p>
+<ul>
+<li>总之，setTimeout(fn,0)的含义是，指定某个任务在主线程最早可得的空闲时间执行，也就是说，尽可能早得执行。<strong>它在”任务队列”的尾部添加一个事件</strong>，因此要等到同步任务和”任务队列”现有的事件都处理完，才会得到执行。</li>
+</ul>
+<h2 id="浏览器"><a href="#浏览器" class="headerlink" title="浏览器"></a>浏览器</h2><ul>
+<li>会先执行一个栈以及栈中的微任务，才会走下一个栈；</li>
+<li>setImmediate会优于setTimeout执行</li>
+<li>微任务包括 process.nextTick ，promise ，Object.observe ，MutationObserver</li>
+<li>宏任务包括 <strong>script</strong> ， setTimeout ，setInterval ，setImmediate ，I/O ，<strong>UI rendering</strong></li>
+<li><img src="/2018/09/08/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/15319899912091.jpg" class="" title="img">
+
+
+</li>
+</ul>
+<h2 id="node端"><a href="#node端" class="headerlink" title="node端"></a>node端</h2><ul>
+<li>node中，会把栈走完，才会走微任务，微任务在两个宏任务中间执行；</li>
+<li>setImmediate与setTimeout执行顺序根据情况判断；</li>
+<li><strong>nextTick</strong>：每次事件轮询后，在额外的I/O执行前，nexttick队列都会优先执行。 递归调用nextTick callbacks 会阻塞任何I/O操作，就像一个while(true); 循环一样。<ul>
+<li>process.nextTick方法可以在当前”执行栈”的尾部—-<strong>下一次Event Loop（主线程读取”任务队列”）之前—-触发回调函数</strong>。也就是说，它指定的任务总是发生在所有异步任务之前。</li>
+</ul>
+</li>
+<li><code>？</code>setImmediate方法则是在<strong>当前”任务队列”的尾部添加事件</strong>，也就是说，它指定的任务总是在下一次Event Loop时执行，这与setTimeout(fn, 0)很像</li>
+</ul>
+<p><strong>事件循环图</strong><br>来源：<br><a href="https://juejin.im/post/5aa8a07cf265da238a3022a4" target="_blank" rel="noopener">几道高级前端面试题解析</a><br>┌───────────────────────┐<br>┌─&gt;│        timers         │<br>│  └──────────┬────────────┘<br>│  ┌──────────┴────────────┐<br>│  │     I/O callbacks     │<br>│  └──────────┬────────────┘<br>│  ┌──────────┴────────────┐<br>│  │     idle, prepare     │<br>│  └──────────┬────────────┘      ┌───────────────┐<br>│  ┌──────────┴────────────┐      │   incoming:   │<br>│  │         poll          │&lt;──connections───     │<br>│  └──────────┬────────────┘      │   data, etc.  │<br>│  ┌──────────┴────────────┐      └───────────────┘<br>│  │        check          │<br>│  └──────────┬────────────┘<br>│  ┌──────────┴────────────┐<br>└──┤    close callbacks    │<br>   └───────────────────────┘</p>
+<ul>
+<li><p>timers阶段会执行 setTimeout 和 setInterval</p>
+</li>
+<li><p>poll 阶段： <strong>执行到点的定时器，执行 poll 队列中的事件</strong></p>
+<ul>
+<li>如果 poll 队列不为空，会遍历回调队列并同步执行，直到队列为空或者系统限制</li>
+<li>如果 poll 队列为空<ul>
+<li>如果有 setImmediate，poll 阶段会停止并且进入到 check 阶段执行 setImmediate</li>
+<li>如果没有 setImmediate 需要执行，会等待回调被加入到队列中并立即执行回调</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>check： setImmediate</p>
+</li>
+<li><p>close：执行 close 事件</p>
+</li>
+</ul>
+<p>setTimeout 设计在poll阶段为空闲时，且设定时间到达后执行；但其在timer阶段执行，setImmediate 设计在check阶段执行；</p>
+<p>微任务不在event loop的任何阶段执行，而是在各个阶段切换的中间执行</p>
+<p><strong>microtask 会在以上每个阶段完成后立即执行</strong>，Node 中的 process.nextTick 会先于其他 microtask 执行。</p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p><strong>process.nextTick递归</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">process.nextTick(<span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">  process.nextTick(<span class="function"><span class="keyword">function</span> <span class="title">B</span>(<span class="params"></span>)</span>&#123;<span class="built_in">console</span>.log(<span class="number">2</span>);&#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span> <span class="title">timeout</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'TIMEOUT FIRED'</span>);</span><br><span class="line">&#125;, <span class="number">0</span>)</span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// TIMEOUT FIRED</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>setImmediate与process.nextTick</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">setImmediate(function A() &#123;</span><br><span class="line">  console.log(1);</span><br><span class="line">  setImmediate(function B()&#123;console.log(2);&#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">setTimeout(function timeout() &#123;</span><br><span class="line">  console.log(&#39;TIMEOUT FIRED&#39;);</span><br><span class="line">&#125;, 0);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>上面代码中，setImmediate与setTimeout(fn,0)各自添加了一个回调函数A和timeout，都是在下一次Event Loop触发。那么，哪个回调函数先执行呢？答案是不确定<br>Node.js文档中称，setImmediate指定的回调函数，总是排在setTimeout前面。实际上，这种情况只发生在递归调用的时候。</p>
+</blockquote>
+<p>我们由此得到了process.nextTick和setImmediate的一个重要区别：</p>
+<p><strong>多个process.nextTick语句总是在当前”执行栈”一次执行完，多个setImmediate可能则需要多次loop才能执行完</strong>事实上，这正是Node.js 10.0版添加setImmediate方法的原因，否则像下面这样的递归调用process.nextTick，将会没完没了，主线程根本不会去读取”事件队列”！</p>
+<p>事实上，现在要是你写出递归的process.nextTick，Node.js会抛出一个警告，要求你改成setImmediate。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://juejin.im/post/5a63470bf265da3e2c383068" target="_blank" rel="noopener">浅析nodejs事件循环机制</a></p>
+<p><a href="https://juejin.im/post/5b097df46fb9a07aa213cf88" target="_blank" rel="noopener">浏览器和Node.js中的Event Loop</a></p>
+<p><a href="http://www.ruanyifeng.com/blog/2014/10/event-loop.html" target="_blank" rel="noopener">JavaScript 运行机制详解：再谈Event Loop</a></p>
+<p><a href="https://juejin.im/post/5ac0cc38f265da238440b9ec" target="_blank" rel="noopener">谈谈 Event Loop（事件循环）机制</a></p>
+
+      </div>
+      <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="http://tangciwei.github.io">tangciwei</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="http://tangciwei.github.io/2018/09/08/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/">http://tangciwei.github.io/2018/09/08/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+      <footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/nodejs/">nodejs</a>
+            </div>
+        
+        <nav class="post-nav"><a class="prev" href="/2018/09/08/%E7%BA%BF%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">线程和进程</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    <a class="next" href="/2018/08/17/%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E5%BB%BA%E8%AE%BE/">
+        <span class="next-text nav-default">技术团队建设</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"><a href="mailto:326026238@qq.com" class="iconfont icon-email" title="email"></a>
+        <a href="https://github.com/tangciwei" target="_blank" rel="noopener" class="iconfont icon-github" title="github"></a>
+        <a href="http://weibo.com/p/1005052338797901" target="_blank" rel="noopener" class="iconfont icon-weibo" title="weibo"></a>
+        <a href="https://www.zhihu.com/people/tangciwei/activities" target="_blank" rel="noopener" class="iconfont icon-zhihu" title="zhihu"></a>
+        </div><div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even" target="_blank" rel="noopener">Even</a>
+  </span>
+
+  <span class="copyright-year">&copy;2015 - 2020<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">tangciwei</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+</body>
+</html>

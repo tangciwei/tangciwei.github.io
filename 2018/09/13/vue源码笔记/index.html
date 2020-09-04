@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="">
+  <head><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="vue源码笔记"/><meta name="keywords" content="前端,nodejs,js,javascript,vue,vue源码,html5,开发者,程序猿,编程,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验" /><link rel="alternate" href="/atom.xml" title="tangciwei's Blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0" />
+<link rel="canonical" href="http://tangciwei.github.io/2018/09/13/vue源码笔记/"/>
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0" />
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":"","latex":false};
+</script>
+
+    <title>vue源码笔记 - tangciwei's Blog</title>
+  <meta name="generator" content="Hexo 4.2.0"></head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">tangciwei's Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><a href="/">
+        <li class="mobile-menu-item">首页
+          </li>
+      </a><a href="/archives/">
+        <li class="mobile-menu-item">归档
+          </li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于
+          </li>
+      </a></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">tangciwei's Blog</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+          <a class="menu-item-link" href="/">
+            首页
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            归档
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/about/">
+            关于
+            </a>
+        </li>
+      </ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">vue源码笔记
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-09-13
+        </span></div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Ⅰ-core"><span class="toc-text">Ⅰ core</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、global-api"><span class="toc-text">一、global-api</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#①assets-js"><span class="toc-text">①assets.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#②extend-js"><span class="toc-text">②extend.js</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、instance"><span class="toc-text">二、instance</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#①init-js"><span class="toc-text">①init.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#②lifecycle-js"><span class="toc-text">②lifecycle.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#③proxy-js"><span class="toc-text">③proxy.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#④render-js"><span class="toc-text">④render.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#⑤state-js"><span class="toc-text">⑤state.js</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、observer"><span class="toc-text">三、observer</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#①array-js"><span class="toc-text">①array.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#②dep-js"><span class="toc-text">②dep.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#③scheduler-js"><span class="toc-text">③scheduler.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#④index-js"><span class="toc-text">④index.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#⑤traverse-js"><span class="toc-text">⑤traverse.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#⑥watcher-js"><span class="toc-text">⑥watcher.js</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、util"><span class="toc-text">四、util</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#①perf-js"><span class="toc-text">①perf.js</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </div><div class="post-content"><blockquote>
+<p>以下笔记由<a href="https://www.npmjs.com/package/src-help" target="_blank" rel="noopener">源码笔记助手</a>自动生成</p>
+</blockquote>
+<h1 id="Ⅰ-core"><a href="#Ⅰ-core" class="headerlink" title="Ⅰ core"></a>Ⅰ core</h1><h2 id="一、global-api"><a href="#一、global-api" class="headerlink" title="一、global-api"></a>一、global-api</h2><h3 id="①assets-js"><a href="#①assets-js" class="headerlink" title="①assets.js"></a>①assets.js</h3><p><strong><code>definition = this.options._base.extend(definition);</code></strong></p>
+<a id="more"></a>
+
+
+<p>initAssetRegisters函数中，Vue.component，<code>this.options._base</code>值为Vue<br>我们每个组件的创建都是通过 Vue.extend 继承而来</p>
+<hr>
+<h3 id="②extend-js"><a href="#②extend-js" class="headerlink" title="②extend.js"></a>②extend.js</h3><p><strong><code>Vue.extend = function (extendOptions: Object): Function {</code></strong></p>
+<p>总结：</p>
+<ol>
+<li>定义了VueComponent，并且组件执行了和Vue定义一样的_init方法；</li>
+<li>Sub.options进行了选项合并；</li>
+<li>初始化了props，进行了_props的代理。defineComputed</li>
+<li>缓存了组件；</li>
+</ol>
+<p><strong><code>if (cachedCtors[SuperId]) {</code></strong></p>
+<p>这里的<code>cachedCtors[SuperId]</code>为Sub,即组件；第一次执行以后缓存到这里</p>
+<p><strong><code>Sub.prototype = Object.create(Super.prototype);</code></strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">这里的参数options和上面的extendOptions不一样；</span><br><span class="line"><span class="keyword">const</span> Sub = <span class="function"><span class="keyword">function</span> <span class="title">VueComponent</span>(<span class="params">options</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>._init(options);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>VueComponent定义地方，继承Vue;<br>组件也会执行_init方法；</p>
+<p><strong><code>Sub.options = mergeOptions(</code></strong></p>
+<p>组件options合并到父组件上面,生成新的组件的options<br>注意这里的options不同于$options;</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Sub.options = mergeOptions(</span><br><span class="line">    Super.options,</span><br><span class="line">    extendOptions</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="二、instance"><a href="#二、instance" class="headerlink" title="二、instance"></a>二、instance</h2><h3 id="①init-js"><a href="#①init-js" class="headerlink" title="①init.js"></a>①init.js</h3><p><strong><code>const opts = vm.$options = Object.create(vm.constructor.options);</code></strong></p>
+<p>组件的vm.$options继承其组件上面的options;</p>
+<hr>
+<h3 id="②lifecycle-js"><a href="#②lifecycle-js" class="headerlink" title="②lifecycle.js"></a>②lifecycle.js</h3><p><strong><code>let parent = options.parent</code></strong></p>
+<p><code>parent</code>来源：core/vdom/create-component.js-&gt;createComponentInstanceForVnode<br>在vm.<strong>patch</strong>会创建子组件，在_update时，activeInstance总是指向当前实例。而调用createComponentInstanceForVnode时，会传入activeInstance</p>
+<p><strong><code>if (parent &amp;&amp; !options.abstract) {</code></strong></p>
+<p>initLifecycle方法里，<code>vm.$parent</code>的值为最近的一个非抽象组件；</p>
+<p><strong><code>Vue.prototype._update = function (vnode: VNode, hydrating?: boolean) {</code></strong></p>
+<p>这里<code>const prevActiveInstance = activeInstance</code>，patch之后，<code>activeInstance = prevActiveInstance</code><br>要保存之前的,估计是为了递归考虑。</p>
+<hr>
+<h3 id="③proxy-js"><a href="#③proxy-js" class="headerlink" title="③proxy.js"></a>③proxy.js</h3><p><strong><code>const handlers = options.render &amp;&amp; options.render._withStripped</code></strong></p>
+<p><code>_withStripped</code>: 当手写render函数时，就没有with,那么就没有警告。所以可以给_withStripped设置以便得到警告；<br>在使用 webpack 配合 vue-loader 的环境中， vue-loader 会借助 vuejs@component-compiler-utils 将 template 编译为不使用 with 语句包裹的遵循严格模式的 JavaScript，并为编译后的 render 方法设置 render._withStripped = true</p>
+<p><strong><code>vm._renderProxy = new Proxy(vm, handlers);</code></strong></p>
+<p>has操作可以拦截<br>属性查询: foo in proxy<br>继承属性查询: foo in Object.create(proxy)<br>with 检查: with(proxy) { (foo); }<br>Reflect.has()</p>
+<hr>
+<h3 id="④render-js"><a href="#④render-js" class="headerlink" title="④render.js"></a>④render.js</h3><p><strong><code>defineReactive(vm, &#39;$attrs&#39;, parentData &amp;&amp; parentData.attrs || emptyObject, null, true);</code></strong></p>
+<p>备注(todo：高阶组件用到</p>
+<hr>
+<h3 id="⑤state-js"><a href="#⑤state-js" class="headerlink" title="⑤state.js"></a>⑤state.js</h3><p><strong><code>toggleObserving(false);</code></strong></p>
+<p><code>initProps中：</code>在定义 props 数据时，不将 prop 值转换为响应式数据，这里要注意的是：由于 props 本身是通过 defineReactive 定义的，所以 props 本身是响应式的，但没有对值进行深度定义</p>
+<p><strong><code>export function getData(data: Function, vm: Component): any {</code></strong></p>
+<p>为了防止使用 props 数据初始化 data 数据时收集冗余的依赖<br>pushTarget和popTarget，因为props的初始化在前。</p>
+<p><strong><code>watchers[key] = new Watcher(</code></strong></p>
+<p>计算属性，每个属性，对应一个watcher。和一个dep</p>
+<p><strong><code>export function defineComputed(</code></strong></p>
+<p>这里组件也会调用，在extent.js-&gt;initComputed</p>
+<p><strong><code>watch选项和method结合用法</code></strong></p>
+<p>createWatcher函数，如下使用场景</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">watch: &#123;</span><br><span class="line">  name: <span class="string">'handleNameChange'</span></span><br><span class="line">&#125;,</span><br><span class="line">methods: &#123;</span><br><span class="line">  handleNameChange () &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'name change'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> handler === <span class="string">'string'</span>) &#123;</span><br><span class="line">    handler = vm[handler];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="三、observer"><a href="#三、observer" class="headerlink" title="三、observer"></a>三、observer</h2><h3 id="①array-js"><a href="#①array-js" class="headerlink" title="①array.js"></a>①array.js</h3><p><strong><code>if (inserted) ob.observeArray(inserted)</code></strong></p>
+<p>inserted表示增加的元素，对其进行观测</p>
+<p><strong><code>ob.dep.notify()</code></strong></p>
+<p>显然数组本身变化了，由于在get观测时，进行了收集，childOb就是此处的ob，那么理应触发notify;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">if (Dep.target) &#123;</span><br><span class="line">  dep.depend()</span><br><span class="line">  if (childOb) &#123;</span><br><span class="line">    childOb.dep.depend()</span><br><span class="line">    if (Array.isArray(value)) &#123;</span><br><span class="line">      dependArray(value)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="②dep-js"><a href="#②dep-js" class="headerlink" title="②dep.js"></a>②dep.js</h3><p><strong><code>思考为什么不把Dep.target直接放到dep的subs里面?</code></strong></p>
+<p>每个观测的对象，都有一个<strong>ob</strong>属性。都有一个dep对应；<br>每个观测的属性，都有对应的一个闭包dep;<br>如果直接把Dep.target这个Watcher放到dep里面；<br><code>?</code>无法做到去重依赖收集?</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (Dep.target) &#123;</span><br><span class="line">    Dep.target.addDep(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="③scheduler-js"><a href="#③scheduler-js" class="headerlink" title="③scheduler.js"></a>③scheduler.js</h3><p><strong><code>export function queueWatcher (watcher: Watcher) {</code></strong></p>
+<p>入队，异步批量更新，也是值得学习的地方！</p>
+<p><strong><code>flush时，可能存在还有观察者入队情况</code></strong></p>
+<p>在这个flushSchedulerQueue执行的过程中，可能会执行到queueWatcher函数里面；<br>什么时候呢？<br>计算属性，比如队列执行更新时经常会执行渲染函数观察者的更新，渲染函数中很可能有计算属性的存在，由于计算属性在实现方式上与普通响应式属性有所不同，<br>所以<strong>当触发计算属性的 get 拦截器函数时会有观察者入队的行为</strong>，这个时候我们需要特殊处理。<br>也就是说，某个计算属性依赖一个非计算属性，当非计算属性都入队完毕后，开始flush了。<br>这个时候，计算属性可能入队。要插入在适当的位置。<br><code>?</code>具体呢？？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">if</span> (!flushing) &#123;</span><br><span class="line">      queue.push(watcher)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"><span class="keyword">if</span> already flushing, splice the watcher based on its id</span><br><span class="line"><span class="keyword">if</span> already past its id, it will be run next immediately.</span><br><span class="line">      <span class="keyword">let</span> i = queue.length - <span class="number">1</span></span><br><span class="line">      <span class="keyword">while</span> (i &gt; index &amp;&amp; queue[i].id &gt; watcher.id) &#123;</span><br><span class="line">        i--</span><br><span class="line">      &#125;</span><br><span class="line">      queue.splice(i + <span class="number">1</span>, <span class="number">0</span>, watcher)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="④index-js"><a href="#④index-js" class="headerlink" title="④index.js"></a>④index.js</h3><p><strong><code>this.observeArray(value)</code></strong></p>
+<p>任何对数组的原生操作，实际上都通过原型链，访问了另外一个对象，另外一个对象<br>拥有和数组一样的方法，只是在里面进行了额外的操作，包括对新元素继续观测，触发当前数组的dep的notify</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if (Array.isArray(value)) &#123;</span><br><span class="line">  const augment &#x3D; hasProto</span><br><span class="line">    ? protoAugment</span><br><span class="line">    : copyAugment</span><br><span class="line">  augment(value, arrayMethods, arrayKeys)</span><br></pre></td></tr></table></figure>
+
+
+<p><strong><code>if (hasOwn(value, &#39;__ob__&#39;) &amp;&amp; value.__ob__ instanceof Observer) {</code></strong></p>
+<p>避免重复观测一个数据对象</p>
+<p><strong><code>保证定义响应式数据行为的一致性</code></strong></p>
+<p>属性原本的 getter 由用户定义，用户可能在 getter 中做任何意想不到的事情.<br>但是如果只有getter,没有setter,那么，本身是不会深度观测的。如果重新给熟悉赋值，会对新的值进行观测。<br>与最开始的不深度观测不一致了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if ((!getter || setter) &amp;&amp; arguments.length &#x3D;&#x3D;&#x3D; 2) &#123;</span><br><span class="line">  val &#x3D; obj[key]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><strong><code>if (Array.isArray(value)) {</code></strong></p>
+<p>defineReactive的get方法中，为了让数组的每个元素，增加属性时，也是响应的；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if (Array.isArray(value)) &#123;</span><br><span class="line">  dependArray(value)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><strong><code>target.splice(key, 1, val)</code></strong></p>
+<p><code>Vue.set</code>给数组增加元素实际上调用的是splice响应式方法；</p>
+<p><strong><code>defineReactive(ob.value, key, val)</code></strong></p>
+<p>Vue.set方法，在设置新属性后，本身的对象也改变了，需要触发通知.<br>本身的收集，是在get中完成。对应的都是同一个ob.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (childOb) &#123;</span><br><span class="line">childOb.dep.depend()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">defineReactive(ob.value, key, val)</span><br><span class="line">ob.dep.notify()</span><br></pre></td></tr></table></figure>
+
+
+<p><strong><code>function dependArray (value: Array&lt;any&gt;) {</code></strong></p>
+<p>如果数组的某个元素，是个对象或数组，那么一点会有对应的<strong>ob</strong>。<br>那么对这个元素本身，需要进行收集。这样，自身增加元素的时候，可以调用自身<strong>ob</strong>这个观察者上面的dep属性，进行notify.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">e = value[i]</span><br><span class="line">e &amp;&amp; e.__ob__ &amp;&amp; e.__ob__.dep.depend()</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="⑤traverse-js"><a href="#⑤traverse-js" class="headerlink" title="⑤traverse.js"></a>⑤traverse.js</h3><p><strong><code>解决循环引用问题</code></strong></p>
+<p>它解决了循环引用导致死循环的问题</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj1 = &#123;&#125;</span><br><span class="line"><span class="keyword">const</span> obj2 = &#123;&#125;</span><br><span class="line">obj1.data = obj2</span><br><span class="line">obj2.data = obj1</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> depId = val.__ob__.dep.id;</span><br><span class="line"><span class="keyword">if</span> (seen.has(depId)) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">seen.add(depId);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="⑥watcher-js"><a href="#⑥watcher-js" class="headerlink" title="⑥watcher.js"></a>⑥watcher.js</h3><p><strong><code>如何避免依赖重复收集？</code></strong></p>
+<p><strong>Watcher来管理dep。</strong><br><code>newDeps</code>，防止单次render，相同的值，虽然都执行了get,但不会都加入多次依赖。</p>
+<p>一次render结束后：会执行cleanupDeps()，对无用的dep清理，无用的定义就是dep没在新的newDepIds里面；<br>然后将新的newDepIds复制给旧的depIds。而newDepIds清理。<br>这个depIds机制，可以防止多次执行render()时重复收集。<br>下次更新渲染时，某些熟悉已经进行了依赖收集了，就不需要再收集一次了。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"> addDep(dep: Dep) &#123;</span><br><span class="line">     <span class="keyword">const</span> id = dep.id;</span><br><span class="line">     <span class="keyword">if</span> (!<span class="keyword">this</span>.newDepIds.has(id)) &#123;</span><br><span class="line">         <span class="keyword">this</span>.newDepIds.add(id);</span><br><span class="line">         <span class="keyword">this</span>.newDeps.push(dep);</span><br><span class="line">         <span class="keyword">if</span> (!<span class="keyword">this</span>.depIds.has(id)) &#123;</span><br><span class="line">             dep.addSub(<span class="keyword">this</span>);</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment">* Clean up for dependency collection.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"> cleanupDeps() &#123;</span><br><span class="line">     <span class="keyword">let</span> i = <span class="keyword">this</span>.deps.length;</span><br><span class="line">     <span class="keyword">while</span> (i--) &#123;</span><br><span class="line">         <span class="keyword">const</span> dep = <span class="keyword">this</span>.deps[i];</span><br><span class="line">         <span class="keyword">if</span> (!<span class="keyword">this</span>.newDepIds.has(dep.id)) &#123;</span><br><span class="line">             dep.removeSub(<span class="keyword">this</span>);</span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">let</span> tmp = <span class="keyword">this</span>.depIds;</span><br><span class="line">     <span class="keyword">this</span>.depIds = <span class="keyword">this</span>.newDepIds;</span><br><span class="line">     <span class="keyword">this</span>.newDepIds = tmp;</span><br><span class="line">     <span class="keyword">this</span>.newDepIds.clear();</span><br><span class="line"></span><br><span class="line">     tmp = <span class="keyword">this</span>.deps;</span><br><span class="line">     <span class="keyword">this</span>.deps = <span class="keyword">this</span>.newDeps;</span><br><span class="line">     <span class="keyword">this</span>.newDeps = tmp;</span><br><span class="line">     <span class="keyword">this</span>.newDeps.length = <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><strong><code>this.dirty = false;</code></strong></p>
+<p><code>getAndInvoke</code>方法内<br>由于计算属性是惰性求值，所以在实例化计算属性的时候 this.dirty 的值会被设置为 true，代表着还没有求值，后面当真正对计算属性求值时，也就是执行如上代码时才会将 this.dirty 设置为 false，代表着已经求过值了</p>
+<p><strong><code>计算属性惰性求值+依赖收集</code></strong></p>
+<p>此时执行get,那么计算属性方法内部变量，将会收集当前观察者，也就是计算属性的观察者。<br>当内部变量变化时，会自动调用当前计算属性的观察者<br>响应式属性收集计算属性的观察者对象，计算属性的观察者对象收集渲染函数的观察者对象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">evaluate() &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.dirty) &#123;</span><br><span class="line">        <span class="keyword">this</span>.value = <span class="keyword">this</span>.get();</span><br><span class="line">        <span class="keyword">this</span>.dirty = <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><strong><code>if (!this.vm._isBeingDestroyed) {</code></strong></p>
+<p>remove self from vm’s watcher list<br>this is a somewhat expensive operation so we skip it<br>if the vm is being destroyed.</p>
+<hr>
+<h2 id="四、util"><a href="#四、util" class="headerlink" title="四、util"></a>四、util</h2><h3 id="①perf-js"><a href="#①perf-js" class="headerlink" title="①perf.js"></a>①perf.js</h3><p><strong><code>perf.measure(name, startTag, endTag)</code></strong></p>
+<p>window.performance<br>Vue性能追踪</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mark &#x3D; tag &#x3D;&gt; perf.mark(tag)</span><br><span class="line">measure &#x3D; (name, startTag, endTag) &#x3D;&gt; &#123;</span><br></pre></td></tr></table></figure>
+
+<hr>
+
+      </div>
+      <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="http://tangciwei.github.io">tangciwei</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="http://tangciwei.github.io/2018/09/13/vue%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0/">http://tangciwei.github.io/2018/09/13/vue%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+      <footer class="post-footer">
+        
+        <nav class="post-nav"><a class="prev" href="/2018/09/17/webpack4%E5%AD%A6%E4%B9%A0/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">webpack4学习</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    <a class="next" href="/2018/09/11/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/">
+        <span class="next-text nav-default">浏览器缓存</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"><a href="mailto:326026238@qq.com" class="iconfont icon-email" title="email"></a>
+        <a href="https://github.com/tangciwei" target="_blank" rel="noopener" class="iconfont icon-github" title="github"></a>
+        <a href="http://weibo.com/p/1005052338797901" target="_blank" rel="noopener" class="iconfont icon-weibo" title="weibo"></a>
+        <a href="https://www.zhihu.com/people/tangciwei/activities" target="_blank" rel="noopener" class="iconfont icon-zhihu" title="zhihu"></a>
+        </div><div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even" target="_blank" rel="noopener">Even</a>
+  </span>
+
+  <span class="copyright-year">&copy;2015 - 2020<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">tangciwei</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+</body>
+</html>
