@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="">
+  <head><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="react原理fiber和hooks"/><meta name="keywords" content="前端,nodejs,js,javascript,vue,vue源码,html5,开发者,程序猿,编程,开源,IT网站,Developer,Programmer,Coder,Geek,html,css,css3,用户体验" /><link rel="alternate" href="/atom.xml" title="tangciwei's Blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0" />
+<link rel="canonical" href="http://tangciwei.github.io/2020/09/04/react原理fiber和hooks/"/>
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0" />
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":"","latex":false};
+</script>
+
+    <title>react原理fiber和hooks - tangciwei's Blog</title>
+  <meta name="generator" content="Hexo 4.2.0"></head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">tangciwei's Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><a href="/">
+        <li class="mobile-menu-item">首页
+          </li>
+      </a><a href="/archives/">
+        <li class="mobile-menu-item">归档
+          </li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于
+          </li>
+      </a></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">tangciwei's Blog</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+          <a class="menu-item-link" href="/">
+            首页
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            归档
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/about/">
+            关于
+            </a>
+        </li>
+      </ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">react原理fiber和hooks
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2020-09-04
+        </span></div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#react-原理学习"><span class="toc-text">react 原理学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#fiber-数据结构"><span class="toc-text">fiber 数据结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reconciliation-阶段"><span class="toc-text">Reconciliation 阶段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数和-hooks-机制"><span class="toc-text">函数和 hooks 机制</span></a></li></ol></li></ol>
+    </div>
+  </div><div class="post-content"><blockquote>
+<p><a href="https://github.com/tangciwei/react-didact/edit/master/readme.md" target="_blank" rel="noopener">https://github.com/tangciwei/react-didact/edit/master/readme.md</a></p>
+</blockquote>
+<h1 id="react-原理学习"><a href="#react-原理学习" class="headerlink" title="react 原理学习"></a>react 原理学习</h1><ul>
+<li>fiber 数据结构，将执行过程分层一份一份的，这样就不会阻塞 ui 渲染，所以要在上面记录一些信息，3 个指针；</li>
+<li>Reconciliation，指的是更新时，去 diff。函数执行也在这个阶段，这里也包括 useState 的执行。</li>
+<li>commit 阶段，真正更新 dom。3 种情况的区别</li>
+</ul>
+<a id="more"></a>
+<h2 id="fiber-数据结构"><a href="#fiber-数据结构" class="headerlink" title="fiber 数据结构"></a>fiber 数据结构</h2><p>原因方便找下一个 fiber/上一个<br>One of the goals of this data structure is to make it easy to find the next unit of work. That’s why each fiber has a link to its first child, its next sibling and its parent.<br>优先 child/sibling/parent</p>
+<h2 id="Reconciliation-阶段"><a href="#Reconciliation-阶段" class="headerlink" title="Reconciliation 阶段"></a>Reconciliation 阶段</h2><ol>
+<li>首次+更新，先构造 fiber 数据结构，顺便得到 diff 数据，每次要做的事情是（当前 dom 生成，首次），diff children 得到数据；</li>
+<li>最后 commitRoot, 根据 diff 的数据，进行相应更新。</li>
+<li>新增 dom</li>
+<li>删除 dom</li>
+<li>属性<ol>
+<li>删除旧属性/事件</li>
+<li>新增新属性/事件</li>
+</ol>
+</li>
+<li>再次归零，旧的 currentRoot 和 wipRoot</li>
+</ol>
+<h2 id="函数和-hooks-机制"><a href="#函数和-hooks-机制" class="headerlink" title="函数和 hooks 机制"></a>函数和 hooks 机制</h2><ul>
+<li>函数，无非就是让其执行一次；</li>
+<li>中间有 useState 时，执行就会有闭包，闭包里面放着 hook，当下次 setState 时，会将更新事件放入 hook 的队列里面，然后下次 render 时，就会执行队列里面的函数。</li>
+<li>这当中，每个函数多个 useState 区分完全是靠 index。</li>
+</ul>
+
+      </div>
+      <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="http://tangciwei.github.io">tangciwei</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="http://tangciwei.github.io/2020/09/04/react%E5%8E%9F%E7%90%86fiber%E5%92%8Chooks/">http://tangciwei.github.io/2020/09/04/react%E5%8E%9F%E7%90%86fiber%E5%92%8Chooks/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+      <footer class="post-footer">
+        
+        <nav class="post-nav"><a class="next" href="/2020/09/04/promise%20typescript%E5%AE%9E%E7%8E%B0/">
+        <span class="next-text nav-default">promise typescript实现</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"><a href="mailto:326026238@qq.com" class="iconfont icon-email" title="email"></a>
+        <a href="https://github.com/tangciwei" target="_blank" rel="noopener" class="iconfont icon-github" title="github"></a>
+        <a href="http://weibo.com/p/1005052338797901" target="_blank" rel="noopener" class="iconfont icon-weibo" title="weibo"></a>
+        <a href="https://www.zhihu.com/people/tangciwei/activities" target="_blank" rel="noopener" class="iconfont icon-zhihu" title="zhihu"></a>
+        </div><div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even" target="_blank" rel="noopener">Even</a>
+  </span>
+
+  <span class="copyright-year">&copy;2015 - 2020<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">tangciwei</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+</body>
+</html>

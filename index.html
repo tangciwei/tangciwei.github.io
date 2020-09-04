@@ -90,6 +90,29 @@
         <div class="content-wrapper">
           <div id="content" class="content"><section id="posts" class="posts"><article class="post">
     <header class="post-header">
+      <h1 class="post-title"><a class="post-link" href="/2020/09/04/react%E5%8E%9F%E7%90%86fiber%E5%92%8Chooks/">react原理fiber和hooks</a>
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2020-09-04
+        </span></div>
+    </header>
+
+    <div class="post-content"><blockquote>
+<p><a href="https://github.com/tangciwei/react-didact/edit/master/readme.md" target="_blank" rel="noopener">https://github.com/tangciwei/react-didact/edit/master/readme.md</a></p>
+</blockquote>
+<h1 id="react-原理学习"><a href="#react-原理学习" class="headerlink" title="react 原理学习"></a>react 原理学习</h1><ul>
+<li>fiber 数据结构，将执行过程分层一份一份的，这样就不会阻塞 ui 渲染，所以要在上面记录一些信息，3 个指针；</li>
+<li>Reconciliation，指的是更新时，去 diff。函数执行也在这个阶段，这里也包括 useState 的执行。</li>
+<li>commit 阶段，真正更新 dom。3 种情况的区别</li>
+</ul>
+          <div class="read-more">
+            <a href="/2020/09/04/react%E5%8E%9F%E7%90%86fiber%E5%92%8Chooks/" class="read-more-link">阅读更多</a>
+          </div>
+        </div></article>
+      <article class="post">
+    <header class="post-header">
       <h1 class="post-title"><a class="post-link" href="/2020/09/04/promise%20typescript%E5%AE%9E%E7%8E%B0/">promise typescript实现</a>
         </h1>
 
@@ -258,27 +281,6 @@
 <h2 id="2-缓存过期情况"><a href="#2-缓存过期情况" class="headerlink" title="2.缓存过期情况"></a>2.缓存过期情况</h2>
           <div class="read-more">
             <a href="/2018/09/11/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/" class="read-more-link">阅读更多</a>
-          </div>
-        </div></article>
-      <article class="post">
-    <header class="post-header">
-      <h1 class="post-title"><a class="post-link" href="/2018/09/10/js%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2/">js内存泄露</a>
-        </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-09-10
-        </span></div>
-    </header>
-
-    <div class="post-content"><h2 id="垃圾回收机制"><a href="#垃圾回收机制" class="headerlink" title="垃圾回收机制"></a>垃圾回收机制</h2><h3 id="1-标记清除"><a href="#1-标记清除" class="headerlink" title="1. 标记清除"></a>1. 标记清除</h3><ul>
-<li>垃圾回收器可以检查root和它的所有子对象是否存在</li>
-<li>可达的不是垃圾</li>
-<li>未被标记的内存会被当做垃圾</li>
-</ul>
-<p>不需要的引用：开发者明知内存引用不再需要，却由于某些原因，它仍被留在激活的 root 树中</p>
-          <div class="read-more">
-            <a href="/2018/09/10/js%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2/" class="read-more-link">阅读更多</a>
           </div>
         </div></article>
       <nav class="pagination"><a class="next" href="/page/2/">
